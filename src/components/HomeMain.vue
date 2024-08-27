@@ -1,9 +1,18 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-25" v-for="card, index in store.moviesList">
+            <div class="col-25" v-for="movie, index in store.moviesList">
                 <div class="card">
-                    <img :src="`http://image.tmdb.org/t/p/w342/${card.poster_path}`" alt="">
+                    <img :src="`http://image.tmdb.org/t/p/w342/${movie.poster_path}`" alt="">
+                    <ul>
+                        <li>Titolo: {{ movie.title }}</li>
+                        <li>Titolo originale: {{ movie.original_title }}</li>
+                        <li>
+                            Voto: 
+                            <i v-for="star, index in stars" :class="index < convertVote(movie.vote_average) ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
+                        </li>
+                        <li>Overview: {{ movie.overview }}</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -16,7 +25,13 @@ import { store } from '../store';
 export default {
     data() {
         return {
-            store
+            store,
+            stars: 5
+        }
+    },
+    methods: {
+        convertVote(vote_average) {
+            return Math.round(vote_average / 2)
         }
     }
 }
@@ -30,5 +45,22 @@ export default {
     img {
         width: 100%;
         height: auto;
+    }
+
+    ul {
+        list-style-type: none;
+        display: none;
+    }
+
+    .card:hover img {
+        display: none;
+    }
+
+    .card:hover ul {
+        display: block;
+    }
+
+    .fa-star {
+        color: #FFD43B;
     }
 </style>

@@ -59,15 +59,13 @@ import "/node_modules/flag-icons/css/flag-icons.min.css";
 export default {
     data() {
         return {
-            store,
-            stars: 5
+            store
         }
     },
     methods: {
         getMoviesList() {
             axios.get(store.apiUrlMovies + store.searchQuery).then((result) => {
                 store.moviesList = result.data.results;
-                console.log("film:", store.moviesList)
             });
         },
         getSerieList() {
@@ -81,9 +79,6 @@ export default {
                 languageCode = 'gb';
             }
             return languageCode;
-        },
-        convertVote(vote_average) {
-            return Math.round(vote_average / 2)
         }
     }
 }
