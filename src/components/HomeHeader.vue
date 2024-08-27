@@ -11,7 +11,9 @@
             <span :class="`fi fi-${convertLanguageCode(movie.original_language)}`"></span>
             {{ movie.original_language }}
         </li>
-        <li>{{ convertVote(movie.vote_average) }}</li>
+        <li> 
+            <i v-for="star, index in stars" :class="index < convertVote(movie.vote_average) ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
+        </li>
         <li><img :src="`http://image.tmdb.org/t/p/w92/${movie.poster_path}`" alt=""></li>
     </ol>
     <h1>Lista delle Serie TV:</h1>
@@ -22,7 +24,7 @@
             <span :class="`fi fi-${convertLanguageCode(serie.original_language)}`"></span>
             {{ serie.original_language }}
         </li>
-        <li>{{ convertVote(serie.vote_average) }}</li>
+        <li><i v-for="star, index in stars" :class="index < convertVote(serie.vote_average) ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i></li>
         <li><img :src="`http://image.tmdb.org/t/p/w92/${serie.poster_path}`" alt=""></li>
     </ol>
 </template>
@@ -36,7 +38,8 @@ export default {
     data() {
         return {
             searchQuery: '',
-            store
+            store,
+            stars: 5
         }
     },
     methods: {
@@ -71,5 +74,9 @@ export default {
 
     li:first-child {
         border-top: 1px solid black;
+    }
+
+    .fa-star {
+        color: #FFD43B;
     }
 </style>
