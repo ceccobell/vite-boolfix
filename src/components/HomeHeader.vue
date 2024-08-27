@@ -40,9 +40,9 @@
                         placeholder="Cerca Film, Serie..." 
                         aria-label="Player's name" 
                         aria-describedby="search-button" 
-                        v-model="searchQuery" 
+                        v-model="store.searchQuery" 
                     />
-                    <button class="btn" type="button">
+                    <button class="btn" type="button" @click="getMoviesList(), getSerieList()">
                         <i class="fa-solid fa-magnifying-glass text-white"></i>
                     </button>
                 </div>
@@ -59,19 +59,19 @@ import "/node_modules/flag-icons/css/flag-icons.min.css";
 export default {
     data() {
         return {
-            searchQuery: '',
             store,
             stars: 5
         }
     },
     methods: {
         getMoviesList() {
-            axios.get(store.apiUrlMovies + this.searchQuery).then((result) => {
+            axios.get(store.apiUrlMovies + store.searchQuery).then((result) => {
                 store.moviesList = result.data.results;
+                console.log("film:", store.moviesList)
             });
         },
         getSerieList() {
-            axios.get(store.apiUrlSerieTV + this.searchQuery).then((result) => {
+            axios.get(store.apiUrlSerieTV + store.searchQuery).then((result) => {
                 store.serieTV_list = result.data.results;
             });
         },
