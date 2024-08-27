@@ -12,6 +12,7 @@
             {{ movie.original_language }}
         </li>
         <li>{{ movie.vote_average }}</li>
+        <li><img :src="`http://image.tmdb.org/t/p/w92/${movie.poster_path}`" alt=""></li>
     </ol>
     <h1>Lista delle Serie TV:</h1>
     <ol v-for="(serie, index) in store.serieTV_list" :key="index">
@@ -22,6 +23,7 @@
             {{ serie.original_language }}
         </li>
         <li>{{ serie.vote_average }}</li>
+        <li><img :src="`http://image.tmdb.org/t/p/w92/${serie.poster_path}`" alt=""></li>
     </ol>
 </template>
 
