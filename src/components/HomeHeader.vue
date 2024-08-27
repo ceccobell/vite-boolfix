@@ -1,15 +1,28 @@
 <template>
     <div class="searchbar">
         <input type="text" v-model="searchQuery">
-        <button type="button" @click="getMoviesList()"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button type="button" @click="getMoviesList(), getSerieList()"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
-    <ol v-for="movie, index in store.moviesList" :key="index">
+    <h1>Lista dei film:</h1>
+    <ol v-for="(movie, index) in store.moviesList" :key="index">
         <li>{{ movie.title }}</li>
         <li>{{ movie.original_title }}</li>
-        <li><span :class="`fi fi-${movie.original_language}`"></span>  {{ movie.original_language }}</li>
+        <li>
+            <span :class="`fi fi-${convertLanguageCode(movie.original_language)}`"></span>
+            {{ movie.original_language }}
+        </li>
         <li>{{ movie.vote_average }}</li>
     </ol>
-    <span class="fi fi-en"></span>
+    <h1>Lista delle Serie TV:</h1>
+    <ol v-for="(serie, index) in store.serieTV_list" :key="index">
+        <li>{{ serie.name }}</li>
+        <li>{{ serie.original_name }}</li>
+        <li>
+            <span :class="`fi fi-${convertLanguageCode(serie.original_language)}`"></span>
+            {{ serie.original_language }}
+        </li>
+        <li>{{ serie.vote_average }}</li>
+    </ol>
 </template>
 
 <script>
@@ -27,8 +40,20 @@ export default {
     methods: {
         getMoviesList() {
             axios.get(store.apiUrlMovies + this.searchQuery).then((result) => {
-                store.moviesList = result.data.results
-            })
+                store.moviesList = result.data.results;
+            });
+        },
+        getSerieList() {
+            axios.get(store.apiUrlSerieTV + this.searchQuery).then((result) => {
+                store.serieTV_list = result.data.results;
+            });
+        },
+        convertLanguageCode(languageCode) {
+            // Se il codice lingua è 'en', lo converte in 'gb'
+            if (languageCode === 'en') {
+                languageCode = 'gb';
+            }
+            return languageCode;
         }
     }
 }
