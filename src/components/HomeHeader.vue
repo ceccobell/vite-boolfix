@@ -11,7 +11,7 @@
             <span :class="`fi fi-${convertLanguageCode(movie.original_language)}`"></span>
             {{ movie.original_language }}
         </li>
-        <li>{{ movie.vote_average }}</li>
+        <li>{{ convertVote(movie.vote_average) }}</li>
         <li><img :src="`http://image.tmdb.org/t/p/w92/${movie.poster_path}`" alt=""></li>
     </ol>
     <h1>Lista delle Serie TV:</h1>
@@ -22,7 +22,7 @@
             <span :class="`fi fi-${convertLanguageCode(serie.original_language)}`"></span>
             {{ serie.original_language }}
         </li>
-        <li>{{ serie.vote_average }}</li>
+        <li>{{ convertVote(serie.vote_average) }}</li>
         <li><img :src="`http://image.tmdb.org/t/p/w92/${serie.poster_path}`" alt=""></li>
     </ol>
 </template>
@@ -56,6 +56,9 @@ export default {
                 languageCode = 'gb';
             }
             return languageCode;
+        },
+        convertVote(vote_average) {
+            return Math.round(vote_average / 2)
         }
     }
 }
