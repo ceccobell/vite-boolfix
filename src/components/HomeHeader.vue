@@ -1,5 +1,5 @@
 <template>
-    <div class="searchbar">
+    <!-- <div class="searchbar">
         <input type="text" v-model="searchQuery">
         <button type="button" @click="getMoviesList(), getSerieList()"><i class="fa-solid fa-magnifying-glass"></i></button>
     </div>
@@ -26,7 +26,29 @@
         </li>
         <li><i v-for="star, index in stars" :class="index < convertVote(serie.vote_average) ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i></li>
         <li><img :src="`http://image.tmdb.org/t/p/w92/${serie.poster_path}`" alt=""></li>
-    </ol>
+    </ol> -->
+    <div class="container">
+        <div class="row bg-black">
+            <div class="col-50">
+                <h1>BOOLFLIX</h1>
+            </div>
+            <div class="col-50 d-flex align-items-center justify-content-end">
+                <div class="input-group my-10">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Cerca Film, Serie..." 
+                        aria-label="Player's name" 
+                        aria-describedby="search-button" 
+                        v-model="searchQuery" 
+                    />
+                    <button class="btn" type="button">
+                        <i class="fa-solid fa-magnifying-glass text-white"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -78,5 +100,40 @@ export default {
 
     .fa-star {
         color: #FFD43B;
+    }
+
+    .col-50 {
+        padding: 10px;
+    }
+
+    h1 {
+        color: red;
+    }
+
+    .input-group {
+        display: flex;
+        width: 70%;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .form-control {
+        flex: 1 1 auto;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ced4da;
+        border-radius: 10px 0 0 10px;
+        background-color: #e9ecef;
+        position: relative;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 16px;
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer;
+        border: 0;
+        border-radius: 0 10px 10px 0;
     }
 </style>
