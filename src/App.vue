@@ -1,20 +1,26 @@
 <template>
-  <HomeHeader />
-  <HomeMain />
+    <NavBar />
+    <HomeMain />
 </template>
 
 <script>
-import HomeHeader from './components/HomeHeader.vue';
-import HomeMain from './components/HomeMain.vue';
+import NavBar from "./components/NavBar.vue"
+import HomeMain from "./components/HomePage/HomeMain.vue"
+import { store } from "./store"
 
 export default {
-  components: {
-    HomeHeader,
-    HomeMain
-  }
+    data() {
+        return store
+    },
+    components: {
+        NavBar,
+        HomeMain,
+    },
+    mounted() {
+        store.getTOP10serietv()
+        store.getTOP10movies()
+    },
 }
 </script>
 
-<style scoped>
-  
-</style>
+<style scoped></style>
