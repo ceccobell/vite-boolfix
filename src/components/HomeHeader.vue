@@ -7,8 +7,8 @@ export default {
     data() {
         return {
             store,
-            searchActive: false, // stato per attivare/disattivare il campo di input
-            searchQuery: "", // variabile per memorizzare il valore della ricerca
+            searchActive: false,
+            searchQuery: "",
             navbarItems: [
                 { name: "Home", url: "/", selected: true },
                 { name: "Serie Tv", url: "/tv", selected: false },
@@ -20,10 +20,17 @@ export default {
         }
     },
     methods: {
+        selectItem(selectedItem) {
+            this.navbarItems.forEach((item) => {
+                item.selected = false
+            })
+
+            selectedItem.selected = true
+        },
         toggleSearch() {
             this.searchActive = !this.searchActive
             if (!this.searchActive) {
-                this.searchQuery = "" // resetta il campo input se chiuso
+                this.searchQuery = ""
             }
         },
         performSearch() {
@@ -55,10 +62,10 @@ export default {
                     <h1>BOOLFLIX</h1>
                     <ul class="list-unstyled d-flex">
                         <li
-                            class="text-white"
+                            :class="item.selected ? 'text-active' : 'text-disabled'"
                             v-for="(item, index) in navbarItems"
                             :key="index"
-                            :value="index + 1">
+                            @click="selectItem(item)">
                             {{ item.name }}
                         </li>
                     </ul>
@@ -84,13 +91,18 @@ export default {
 </template>
 
 <style scoped>
+.text-active {
+    color: white;
+}
+
+.text-disabled {
+    color: rgb(193, 193, 193);
+}
+
 li {
     margin: 5px 25px;
     font-size: var(--font-size-sm);
-}
-
-li:first-child {
-    border-top: 1px solid black;
+    cursor: pointer;
 }
 
 .col-100 {
@@ -99,8 +111,7 @@ li:first-child {
 
 h1 {
     color: #e50914;
-    font-size: 30px;
-    margin-right: 15px;
+    font-size: var(--font-size-xl);
 }
 
 .search-wrapper {
