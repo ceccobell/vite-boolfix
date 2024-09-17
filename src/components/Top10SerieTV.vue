@@ -20,6 +20,18 @@ export default {
                 this.top10serieTV_list = result.data.results.slice(0, 10)
             })
         },
+        // Metodo per gestire lo scorrimento in avanti
+        scrollNext() {
+            const row = this.$refs.row
+            const scrollAmount = row.clientWidth * 0.5 // Scorre del 50% della larghezza visibile
+            row.scrollBy({ left: scrollAmount, behavior: "smooth" })
+        },
+        // Metodo per scorrere indietro di due colonne (50% della riga visibile)
+        scrollPrev() {
+            const row = this.$refs.row
+            const scrollAmount = row.clientWidth * 0.5 // Scorre del 50% della larghezza visibile
+            row.scrollBy({ left: -scrollAmount, behavior: "smooth" })
+        },
     },
 }
 </script>
@@ -27,22 +39,43 @@ export default {
 <template>
     <div class="container">
         <h3>Top 10 delle Serie Tv oggi</h3>
-        <div class="row">
-            <div v-for="(serie, index) in top10serieTV_list" :key="serie.id" class="col-25 d-flex">
-                <img :src="`/grafiche/${index + 1}.png`" alt="indice" />
-                <img
-                    :src="`http://image.tmdb.org/t/p/w342/${serie.poster_path}`"
-                    alt="immagine copertina" />
+        <div class="row-container">
+            <div ref="row" class="row">
+                <div
+                    v-for="(serie, index) in top10serieTV_list"
+                    :key="serie.id"
+                    class="col-25 d-flex">
+                    <img :src="`/grafiche/${index + 1}.png`" alt="indice" />
+                    <img
+                        :src="`http://image.tmdb.org/t/p/w342/${serie.poster_path}`"
+                        alt="immagine copertina" />
+                </div>
             </div>
+            <button class="btn-next" @click="scrollNext">
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
+            <button class="btn-prev" @click="scrollPrev">
+                <i class="fa-solid fa-angle-left"></i>
+            </button>
         </div>
     </div>
 </template>
 
 <style scoped>
+.row-container {
+    position: relative;
+}
+
 .row {
     flex-wrap: nowrap;
     overflow-x: auto;
-    position: relative;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.row::-webkit-scrollbar {
+    display: none;
 }
 
 .col-25 {
@@ -53,5 +86,35 @@ img {
     width: 50%;
     height: auto;
     object-fit: cover;
+}
+
+.btn-prev,
+.btn-next {
+    position: absolute;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.861);
+    border: 0;
+    color: white;
+    font-size: var(--font-size-xxl);
+    cursor: pointer;
+    height: 100%;
+    width: 40px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-next {
+    top: 50%;
+    right: 0;
+}
+
+.btn-prev {
+    top: 50%;
+    left: 0;
+}
+
+.row-container:hover .btn-prev,
+.row-container:hover .btn-next {
+    opacity: 1;
 }
 </style>

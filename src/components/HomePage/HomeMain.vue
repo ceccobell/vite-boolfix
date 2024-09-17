@@ -1,14 +1,17 @@
 <template>
     <Top10SerieTV />
+    <Top10Movies />
 </template>
 
 <script>
 import { store } from "../../store"
+import Top10Movies from "../Top10Movies.vue"
 import Top10SerieTV from "../Top10SerieTV.vue"
 
 export default {
     components: {
         Top10SerieTV,
+        Top10Movies,
     },
     data() {
         return {
