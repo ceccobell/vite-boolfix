@@ -9,14 +9,4 @@ export const store = reactive({
     apiUrlSerieTV:
         "https://api.themoviedb.org/3/search/tv?api_key=23534135ecaf0f022b163c9be897d83b&query=",
     serieTV_list: [],
-
-    APItop10movies:
-        "https://api.themoviedb.org/3/trending/movie/day?api_key=23534135ecaf0f022b163c9be897d83b",
-    top10movies: [],
-
-    getTOP10movies() {
-        axios.get(this.APItop10movies).then((result) => {
-            this.top10movies = result.data.results.slice(0, 10)
-        })
-    },
 })

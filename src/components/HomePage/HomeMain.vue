@@ -4,7 +4,7 @@
 
 <script>
 import { store } from "../../store"
-import Top10SerieTV from "./Top10SerieTV.vue"
+import Top10SerieTV from "../Top10SerieTV.vue"
 
 export default {
     components: {
