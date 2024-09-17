@@ -17,7 +17,6 @@ export default {
         HomeMain,
     },
     mounted() {
-        store.getTOP10serietv()
         store.getTOP10movies()
     },
 }
