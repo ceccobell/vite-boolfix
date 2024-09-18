@@ -75,10 +75,6 @@ export default {
     display: none;
 }
 
-.col {
-    flex: 0 0 auto;
-}
-
 img {
     width: 50%;
     height: auto;

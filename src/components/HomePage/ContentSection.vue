@@ -1,35 +1,32 @@
 <script>
-import { store } from "../store"
+import { store } from "../../store"
 import axios from "axios"
 
 export default {
     data() {
         return {
             store,
-            APItop10movies:
-                "https://api.themoviedb.org/3/trending/movie/day?api_key=23534135ecaf0f022b163c9be897d83b",
-            top10movies: [],
+            contents: [],
         }
     },
     mounted() {
-        this.getTOP10movies()
+        this.getContents()
     },
     methods: {
-        getTOP10movies() {
-            axios.get(this.APItop10movies).then((result) => {
-                this.top10movies = result.data.results.slice(0, 10)
+        getContents() {
+            axios.get(store.sections[0].apiUrl).then((result) => {
+                this.contents = result.data.results
             })
         },
-        // Metodo per gestire lo scorrimento in avanti
         scrollNext() {
             const row = this.$refs.row
-            const scrollAmount = row.clientWidth * 0.5 // Scorre del 50% della larghezza visibile
+            const scrollAmount = row.clientWidth // Scorre del 100% della larghezza visibile
             row.scrollBy({ left: scrollAmount, behavior: "smooth" })
         },
-        // Metodo per scorrere indietro di due colonne (50% della riga visibile)
+        // Metodo per scorrere indietro di due colonne (100% della riga visibile)
         scrollPrev() {
             const row = this.$refs.row
-            const scrollAmount = row.clientWidth * 0.5 // Scorre del 50% della larghezza visibile
+            const scrollAmount = row.clientWidth // Scorre del 100% della larghezza visibile
             row.scrollBy({ left: -scrollAmount, behavior: "smooth" })
         },
     },
@@ -38,13 +35,12 @@ export default {
 
 <template>
     <div class="container">
-        <h3>Top 10 dei film oggi</h3>
+        <h3>{{ store.sections[0].title }}</h3>
         <div class="row-container">
             <div ref="row" class="row">
-                <div v-for="(movie, index) in top10movies" :key="movie.id" class="col d-flex">
-                    <img :src="`/grafiche/${index + 1}.png`" alt="indice" />
+                <div v-for="(movie, index) in contents" :key="movie.id" class="col d-flex">
                     <img
-                        :src="`http://image.tmdb.org/t/p/w342/${movie.poster_path}`"
+                        :src="`http://image.tmdb.org/t/p/w342/${movie.backdrop_path}`"
                         alt="immagine copertina" />
                 </div>
             </div>
@@ -76,7 +72,7 @@ export default {
 }
 
 img {
-    width: 50%;
+    width: 100%;
     height: auto;
     object-fit: cover;
 }
