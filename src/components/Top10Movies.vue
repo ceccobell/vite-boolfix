@@ -38,7 +38,7 @@ export default {
 
 <template>
     <div class="container">
-        <h3>Top 10 dei film oggi</h3>
+        <h3 class="text-white row-title">Top 10 dei film oggi</h3>
         <div class="row-container">
             <div ref="row" class="row">
                 <div v-for="(movie, index) in top10movies" :key="movie.id" class="col d-flex">
@@ -59,6 +59,14 @@ export default {
 </template>
 
 <style scoped>
+.row-title {
+    font-size: 1.4vw;
+    line-height: 1.5;
+    margin-top: 3vw;
+    margin-bottom: 0.2vw;
+    padding: 0 4%;
+}
+
 .row-container {
     position: relative;
 }
@@ -85,12 +93,12 @@ img {
 .btn-next {
     position: absolute;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.861);
+    background: hsla(0, 0%, 8%, 0.5);
     border: 0;
     color: white;
     font-size: var(--font-size-xxl);
     cursor: pointer;
-    height: 100%;
+    height: calc(100% - 4px);
     width: 40px;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -99,11 +107,25 @@ img {
 .btn-next {
     top: 50%;
     right: 0;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
 }
 
 .btn-prev {
     top: 50%;
     left: 0;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.btn-prev i,
+.btn-next i {
+    transition: transform 0.3s ease;
+}
+
+.btn-prev:hover i,
+.btn-next:hover i {
+    transform: scale(1.2);
 }
 
 .row-container:hover .btn-prev,

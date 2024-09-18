@@ -46,7 +46,7 @@ export default {
     <div class="container">
         <!-- Ciclo su tutte le sezioni -->
         <div v-for="(section, index) in store.sections" :key="index">
-            <h3>{{ section.title }}</h3>
+            <h3 class="text-white row-title">{{ section.title }}</h3>
             <div class="row-container">
                 <div :ref="'row' + index" class="row">
                     <div
@@ -70,6 +70,14 @@ export default {
 </template>
 
 <style scoped>
+.row-title {
+    font-size: 1.4vw;
+    line-height: 1.5;
+    margin-top: 3vw;
+    margin-bottom: 0.2vw;
+    padding: 0 4%;
+}
+
 .row-container {
     position: relative;
 }
@@ -102,7 +110,7 @@ img {
     color: white;
     font-size: var(--font-size-xxl);
     cursor: pointer;
-    height: calc(100% - 10px);
+    height: calc(100% - 4px);
     width: 40px;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -122,13 +130,14 @@ img {
     border-top-right-radius: 4px;
 }
 
-i {
-    transition: scale 2.3s ease;
+.btn-prev i,
+.btn-next i {
+    transition: transform 0.3s ease;
 }
 
-i:hover,
-i:hover {
-    transform: scale(1.9);
+.btn-prev:hover i,
+.btn-next:hover i {
+    transform: scale(1.2);
 }
 
 .row-container:hover .btn-prev,

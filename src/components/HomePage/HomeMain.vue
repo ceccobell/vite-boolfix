@@ -1,11 +1,12 @@
 <template>
-    <Top10SerieTV />
-    <Top10Movies />
-    <ContentSection />
+    <main>
+        <Top10SerieTV />
+        <Top10Movies />
+        <ContentSection />
+    </main>
 </template>
 
 <script>
-import { store } from "../../store"
 import Top10Movies from "../Top10Movies.vue"
 import Top10SerieTV from "../Top10SerieTV.vue"
 import ContentSection from "./ContentSection.vue"
@@ -16,44 +17,11 @@ export default {
         Top10Movies,
         ContentSection,
     },
-    data() {
-        return {
-            store,
-            stars: 5,
-        }
-    },
-    methods: {
-        convertVote(vote_average) {
-            return Math.round(vote_average / 2)
-        },
-    },
 }
 </script>
 
 <style scoped>
-.card {
-    padding: 10px;
-}
-
-img {
-    width: 100%;
-    height: auto;
-}
-
-ul {
-    list-style-type: none;
-    display: none;
-}
-
-.card:hover img {
-    display: none;
-}
-
-.card:hover ul {
-    display: block;
-}
-
-.fa-star {
-    color: #ffd43b;
+main {
+    background-color: #141414;
 }
 </style>
