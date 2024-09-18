@@ -46,7 +46,14 @@ export default {
     <div class="container">
         <!-- Ciclo su tutte le sezioni -->
         <div v-for="(section, index) in store.sections" :key="index">
-            <h3 class="text-white row-title">{{ section.title }}</h3>
+            <div class="d-flex justify-content-between rowHeader">
+                <h3 class="text-white row-title">{{ section.title }}</h3>
+                <ul class="pagination-indicator list-unstyled">
+                    <li></li>
+                    <li class="active"></li>
+                    <li></li>
+                </ul>
+            </div>
             <div class="row-container">
                 <div :ref="'row' + index" class="row">
                     <div
@@ -73,6 +80,9 @@ export default {
 .row-title {
     font-size: 1.4vw;
     line-height: 1.5;
+}
+
+.rowHeader {
     margin-top: 3vw;
     margin-bottom: 0.2vw;
     padding: 0 4%;
@@ -92,6 +102,18 @@ export default {
 
 .row::-webkit-scrollbar {
     display: none;
+}
+
+.pagination-indicator li {
+    background-color: #4d4d4d;
+    display: inline-block;
+    height: 2px;
+    width: 12px;
+    margin-left: 1px;
+}
+
+.active {
+    background-color: #aaa !important;
 }
 
 img {
