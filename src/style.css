@@ -21,6 +21,7 @@
 .col {
     width: 50%;
     flex: 0 0 auto;
+    padding: 5px;
 }
 
 @media (min-width: 480px) {
