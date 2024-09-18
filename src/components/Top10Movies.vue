@@ -41,7 +41,7 @@ export default {
         <h3>Top 10 dei film oggi</h3>
         <div class="row-container">
             <div ref="row" class="row">
-                <div v-for="(movie, index) in top10movies" :key="movie.id" class="col-25 d-flex">
+                <div v-for="(movie, index) in top10movies" :key="movie.id" class="col d-flex">
                     <img :src="`/grafiche/${index + 1}.png`" alt="indice" />
                     <img
                         :src="`http://image.tmdb.org/t/p/w342/${movie.poster_path}`"
@@ -75,7 +75,7 @@ export default {
     display: none;
 }
 
-.col-25 {
+.col {
     flex: 0 0 auto;
 }
 

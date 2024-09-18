@@ -41,10 +41,7 @@ export default {
         <h3>Top 10 delle Serie Tv oggi</h3>
         <div class="row-container">
             <div ref="row" class="row">
-                <div
-                    v-for="(serie, index) in top10serieTV_list"
-                    :key="serie.id"
-                    class="col-25 d-flex">
+                <div v-for="(serie, index) in top10serieTV_list" :key="serie.id" class="col d-flex">
                     <img :src="`/grafiche/${index + 1}.png`" alt="indice" />
                     <img
                         :src="`http://image.tmdb.org/t/p/w342/${serie.poster_path}`"
@@ -78,7 +75,7 @@ export default {
     display: none;
 }
 
-.col-25 {
+.col {
     flex: 0 0 auto;
 }
 
