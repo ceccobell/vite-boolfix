@@ -1,135 +1,216 @@
 <script>
-import { store } from "../store"
 import axios from "axios"
 
 export default {
     data() {
         return {
-            store,
             APItop10movies:
                 "https://api.themoviedb.org/3/trending/movie/day?api_key=23534135ecaf0f022b163c9be897d83b",
             top10movies: [],
+            itemsPerScreen: 4,
+            sliderIndex: 0,
         }
     },
-    mounted() {
-        this.getTOP10movies()
+    computed: {
+        progressBarItemCount() {
+            return Math.ceil(this.top10movies.length / this.itemsPerScreen) || 0
+        },
     },
     methods: {
         getTOP10movies() {
-            axios.get(this.APItop10movies).then((result) => {
-                this.top10movies = result.data.results.slice(0, 10)
-            })
+            axios
+                .get(this.APItop10movies)
+                .then((result) => {
+                    this.top10movies = result.data.results.slice(0, 10)
+                })
+                .catch((error) => {
+                    console.error("Errore nel recupero dei film:", error)
+                })
         },
-        // Metodo per gestire lo scorrimento in avanti
-        scrollNext() {
-            const row = this.$refs.row
-            const scrollAmount = row.clientWidth * 0.5 // Scorre del 50% della larghezza visibile
-            row.scrollBy({ left: scrollAmount, behavior: "smooth" })
+        onLeftHandleClick() {
+            if (this.sliderIndex - 1 < 0) {
+                this.sliderIndex = this.progressBarItemCount - 1
+            } else {
+                this.sliderIndex -= 1
+            }
         },
-        // Metodo per scorrere indietro di due colonne (50% della riga visibile)
-        scrollPrev() {
-            const row = this.$refs.row
-            const scrollAmount = row.clientWidth * 0.5 // Scorre del 50% della larghezza visibile
-            row.scrollBy({ left: -scrollAmount, behavior: "smooth" })
+        onRightHandleClick() {
+            if (this.sliderIndex + 1 >= this.progressBarItemCount) {
+                this.sliderIndex = 0
+            } else {
+                this.sliderIndex += 1
+            }
         },
+        updateItemsPerScreen() {
+            if (window.innerWidth <= 480) {
+                this.itemsPerScreen = 2
+            } else if (window.innerWidth <= 800) {
+                this.itemsPerScreen = 3
+            } else if (window.innerWidth <= 1100) {
+                this.itemsPerScreen = 4
+            } else if (window.innerWidth <= 1400) {
+                this.itemsPerScreen = 5
+            } else {
+                this.itemsPerScreen = 6
+            }
+
+            if (this.sliderIndex >= this.progressBarItemCount) {
+                this.sliderIndex = 0
+            }
+        },
+    },
+    mounted() {
+        window.addEventListener("resize", this.updateItemsPerScreen)
+        this.updateItemsPerScreen()
+        this.getTOP10movies()
+    },
+    beforeUnmount() {
+        window.removeEventListener("resize", this.updateItemsPerScreen)
     },
 }
 </script>
 
 <template>
     <div class="container">
-        <h3 class="text-white row-title">Top 10 dei film oggi</h3>
-        <div class="row-container">
-            <div ref="row" class="row">
-                <div v-for="(movie, index) in top10movies" :key="movie.id" class="col d-flex">
-                    <img :src="`/grafiche/${index + 1}.png`" alt="indice" />
-                    <img
-                        :src="`http://image.tmdb.org/t/p/w342/${movie.poster_path}`"
-                        alt="immagine copertina" />
+        <div class="row-slider">
+            <div class="header">
+                <h3 class="title text-white">Top 10 dei film oggi</h3>
+                <div class="progress-bar">
+                    <div
+                        v-for="(item, index) in progressBarItemCount"
+                        :key="index"
+                        :class="['progress-item', { active: index === sliderIndex }]"></div>
                 </div>
             </div>
-            <button class="btn-next" @click="scrollNext">
-                <i class="fa-solid fa-angle-right"></i>
-            </button>
-            <button class="btn-prev" @click="scrollPrev">
-                <i class="fa-solid fa-angle-left"></i>
-            </button>
+            <div class="slider-container">
+                <button
+                    v-if="sliderIndex > 0"
+                    class="handle left-handle"
+                    @click="onLeftHandleClick()">
+                    <div class="text">&#8249;</div>
+                </button>
+                <div
+                    class="slider"
+                    :style="{
+                        '--items-per-screen': itemsPerScreen,
+                        '--slider-index': sliderIndex,
+                    }">
+                    <div v-for="(movie, index) in top10movies" :key="index" class="slider-item">
+                        <img :src="`/grafiche/${index + 1}.png`" alt="indice" />
+                        <img
+                            :src="`http://image.tmdb.org/t/p/w342/${movie.poster_path}`"
+                            :alt="movie.title" />
+                    </div>
+                </div>
+                <button class="handle right-handle" @click="onRightHandleClick()">
+                    <div class="text">&#8250;</div>
+                </button>
+            </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-.row-title {
-    font-size: 1.4vw;
-    line-height: 1.5;
-    margin-top: 3vw;
-    margin-bottom: 0.2vw;
-    padding: 0 4%;
-}
-
-.row-container {
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+    padding: 0 4%;
+    overflow: hidden;
 }
 
-.row {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+.slider {
+    display: flex;
+    transition: transform 500ms ease-in-out;
+    transform: translateX(calc(var(--slider-index) * -100%));
 }
 
-.row::-webkit-scrollbar {
-    display: none;
+.slider-item {
+    flex: 1 0 calc(100% / var(--items-per-screen));
+    padding: 2px;
 }
 
-img {
+.slider-item img {
     width: 50%;
-    height: auto;
+    height: 150px;
     object-fit: cover;
 }
 
-.btn-prev,
-.btn-next {
+.slider-item img:last-child {
+    margin-left: -10px;
+}
+
+.handle {
     position: absolute;
+    top: 50%;
     transform: translateY(-50%);
+    height: 100%;
+    width: 4%;
     background: hsla(0, 0%, 8%, 0.5);
-    border: 0;
+    border-radius: 10px;
+    border: none;
     color: white;
-    font-size: var(--font-size-xxl);
     cursor: pointer;
-    height: calc(100% - 4px);
-    width: 40px;
+    padding: 10px;
+    z-index: 10;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: background-color 0.3 ease, opacity 0.3s ease;
 }
 
-.btn-next {
-    top: 50%;
-    right: 0;
-    border-bottom-left-radius: 4px;
-    border-top-left-radius: 4px;
+.row-slider:hover .handle {
+    opacity: 1;
 }
 
-.btn-prev {
-    top: 50%;
+.left-handle {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     left: 0;
-    border-bottom-right-radius: 4px;
-    border-top-right-radius: 4px;
 }
 
-.btn-prev i,
-.btn-next i {
+.right-handle {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    right: 0;
+}
+
+.handle:hover,
+.handle:focus {
+    background: hsla(0, 0%, 8%, 0.7);
+}
+
+.text {
+    font-size: 2.5vw;
     transition: transform 0.3s ease;
 }
 
-.btn-prev:hover i,
-.btn-next:hover i {
-    transform: scale(1.2);
+.handle:hover .text,
+.handle:focus .text {
+    transform: scale(1.25);
 }
 
-.row-container:hover .btn-prev,
-.row-container:hover .btn-next {
-    opacity: 1;
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0% calc(4% + 4px);
+    padding-top: 4vw;
+}
+
+.title {
+    font-size: 1.4vw;
+    vertical-align: middle;
+}
+
+.progress-item {
+    width: 12px;
+    height: 2px;
+    margin-left: 1px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.5);
+    vertical-align: middle;
+}
+
+.progress-item.active {
+    background-color: rgba(255, 255, 255, 0.9);
 }
 </style>

@@ -6,8 +6,8 @@ export default {
     data() {
         return {
             store,
-            contents: [], // Array di arrays, uno per ogni sezione
-            sliderIndex: [], // Array di indici, uno per ogni sezione
+            contents: [],
+            sliderIndex: [],
             itemsPerScreen: 4,
         }
     },
@@ -68,7 +68,10 @@ export default {
 
 <template>
     <div class="container">
-        <div v-for="(section, sectionIndex) in store.sections" :key="sectionIndex" class="row">
+        <div
+            v-for="(section, sectionIndex) in store.sections"
+            :key="sectionIndex"
+            class="row-slider">
             <div class="header">
                 <h3 class="title text-white">{{ section.title }}</h3>
                 <div class="progress-bar">
@@ -154,7 +157,7 @@ export default {
     transition: background-color 0.3 ease, opacity 0.3s ease;
 }
 
-.row:hover .handle {
+.row-slider:hover .handle {
     opacity: 1;
 }
 
