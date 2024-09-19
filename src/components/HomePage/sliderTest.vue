@@ -6,35 +6,39 @@ export default {
     data() {
         return {
             store,
-            contents: [],
-            sliderIndex: 0,
+            contents: [], // Array di arrays, uno per ogni sezione
+            sliderIndex: [], // Array di indici, uno per ogni sezione
             itemsPerScreen: 4,
         }
     },
     computed: {
         progressBarItemCount() {
-            return Math.ceil(this.contents.length / this.itemsPerScreen)
+            return (sectionIndex) =>
+                Math.ceil(this.contents[sectionIndex]?.length / this.itemsPerScreen) || 0
         },
     },
     methods: {
         getContents() {
-            axios.get(store.sections[0].apiUrl).then((result) => {
-                this.contents = result.data.results
-                this.sliderIndex = 0
+            this.store.sections.forEach((section, index) => {
+                axios.get(section.apiUrl).then((result) => {
+                    // Inizializza contents e sliderIndex per ogni sezione
+                    this.contents[index] = result.data.results
+                    this.sliderIndex[index] = 0 // Inizializza l'indice dello slider per ogni sezione
+                })
             })
         },
-        onLeftHandleClick() {
-            if (this.sliderIndex - 1 < 0) {
-                this.sliderIndex = this.progressBarItemCount - 1
+        onLeftHandleClick(sectionIndex) {
+            if (this.sliderIndex[sectionIndex] - 1 < 0) {
+                this.sliderIndex[sectionIndex] = this.progressBarItemCount(sectionIndex) - 1
             } else {
-                this.sliderIndex -= 1
+                this.sliderIndex[sectionIndex] -= 1
             }
         },
-        onRightHandleClick() {
-            if (this.sliderIndex + 1 >= this.progressBarItemCount) {
-                this.sliderIndex = 0
+        onRightHandleClick(sectionIndex) {
+            if (this.sliderIndex[sectionIndex] + 1 >= this.progressBarItemCount(sectionIndex)) {
+                this.sliderIndex[sectionIndex] = 0
             } else {
-                this.sliderIndex += 1
+                this.sliderIndex[sectionIndex] += 1
             }
         },
         updateItemsPerScreen() {
@@ -48,11 +52,6 @@ export default {
                 this.itemsPerScreen = 5
             } else {
                 this.itemsPerScreen = 6
-            }
-            // Assicura che lo sliderIndex sia valido dopo il cambiamento
-            const maxIndex = this.progressBarItemCount - 1
-            if (this.sliderIndex > maxIndex) {
-                this.sliderIndex = maxIndex
             }
         },
     },
@@ -68,35 +67,46 @@ export default {
 </script>
 
 <template>
-    <div class="row">
-        <div class="header">
-            <h3 class="title text-white">{{ store.sections[0].title }}</h3>
-            <div class="progress-bar">
-                <div
-                    v-for="(item, index) in progressBarItemCount"
-                    :key="index"
-                    :class="['progress-item', { active: index === sliderIndex }]"></div>
-            </div>
-        </div>
-        <div class="slider-container">
-            <button v-if="sliderIndex > 0" class="handle left-handle" @click="onLeftHandleClick">
-                <div class="text">&#8249;</div>
-            </button>
-            <div
-                class="slider"
-                :style="{
-                    '--items-per-screen': itemsPerScreen,
-                    '--slider-index': sliderIndex,
-                }">
-                <div v-for="(content, index) in contents" :key="index" class="slider-item">
-                    <img
-                        :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
-                        alt="content image" />
+    <div class="container">
+        <div v-for="(section, sectionIndex) in store.sections" :key="sectionIndex" class="row">
+            <div class="header">
+                <h3 class="title text-white">{{ section.title }}</h3>
+                <div class="progress-bar">
+                    <div
+                        v-for="(item, index) in progressBarItemCount(sectionIndex)"
+                        :key="index"
+                        :class="[
+                            'progress-item',
+                            { active: index === sliderIndex[sectionIndex] },
+                        ]"></div>
                 </div>
             </div>
-            <button class="handle right-handle" @click="onRightHandleClick">
-                <div class="text">&#8250;</div>
-            </button>
+            <div class="slider-container">
+                <button
+                    v-if="sliderIndex[sectionIndex] > 0"
+                    class="handle left-handle"
+                    @click="onLeftHandleClick(sectionIndex)">
+                    <div class="text">&#8249;</div>
+                </button>
+                <div
+                    class="slider"
+                    :style="{
+                        '--items-per-screen': itemsPerScreen,
+                        '--slider-index': sliderIndex[sectionIndex],
+                    }">
+                    <div
+                        v-for="(content, index) in contents[sectionIndex]"
+                        :key="index"
+                        class="slider-item">
+                        <img
+                            :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
+                            alt="content image" />
+                    </div>
+                </div>
+                <button class="handle right-handle" @click="onRightHandleClick(sectionIndex)">
+                    <div class="text">&#8250;</div>
+                </button>
+            </div>
         </div>
     </div>
 </template>
