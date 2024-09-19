@@ -6,14 +6,20 @@ export default {
     data() {
         return {
             store,
-            sectionsContents: {}, // Oggetto per contenere i risultati delle varie sezioni
+            sectionsContents: {},
+            columnsVisible: 0,
+            currentPages: {},
         }
     },
     mounted() {
         this.getContentsForAllSections()
+        this.updateColumnsVisible()
+        window.addEventListener("resize", this.updateColumnsVisible)
+    },
+    beforeDestroy() {
+        window.removeEventListener("resize", this.updateColumnsVisible)
     },
     methods: {
-        // Metodo per ottenere i contenuti per tutte le sezioni
         getContentsForAllSections() {
             store.sections.forEach((section, index) => {
                 axios.get(section.apiUrl).then((result) => {
@@ -21,14 +27,60 @@ export default {
                         ...this.sectionsContents,
                         [section.title]: result.data.results,
                     }
+
+                    this.currentPages[index] = 1
                 })
             })
+        },
+        updateColumnsVisible() {
+            const width = window.innerWidth
+            let columns = 0
+            if (width >= 1400) {
+                columns = 6
+            } else if (width >= 1100) {
+                columns = 5
+            } else if (width >= 800) {
+                columns = 4
+            } else if (width >= 480) {
+                columns = 3
+            } else {
+                columns = 2
+            }
+            this.columnsVisible = columns
+
+            // Adjust currentPages if necessary
+            store.sections.forEach((section, index) => {
+                const totalPages = this.totalPages(index)
+                if (this.currentPages[index] > totalPages) {
+                    this.currentPages[index] = totalPages
+                }
+            })
+        },
+        totalPages(index) {
+            const section = store.sections[index]
+            const contents = this.sectionsContents[section.title] || []
+
+            // Controlla se ci sono contenuti e se columnsVisible è valido
+            if (contents.length === 0 || this.columnsVisible === 0) {
+                return 1 // Almeno una pagina, evita errori
+            }
+
+            const totalItems = contents.length
+            const pages = Math.ceil(totalItems / this.columnsVisible)
+
+            // Assicurati che pages sia sempre almeno 1
+            return pages > 0 ? pages : 1
         },
         scrollNext(index) {
             const row = this.$refs["row" + index][0]
             if (row) {
                 const scrollAmount = row.clientWidth
                 row.scrollBy({ left: scrollAmount, behavior: "smooth" })
+                // Update current page
+                const totalPages = this.totalPages(index)
+                if (this.currentPages[index] < totalPages) {
+                    this.currentPages[index] = this.currentPages[index] + 1
+                }
             }
         },
         scrollPrev(index) {
@@ -36,6 +88,10 @@ export default {
             if (row) {
                 const scrollAmount = row.clientWidth
                 row.scrollBy({ left: -scrollAmount, behavior: "smooth" })
+                // Update current page
+                if (this.currentPages[index] > 1) {
+                    this.currentPages[index] = this.currentPages[index] - 1
+                }
             }
         },
     },
@@ -44,14 +100,15 @@ export default {
 
 <template>
     <div class="container">
-        <!-- Ciclo su tutte le sezioni -->
+        <!-- Loop through all sections -->
         <div v-for="(section, index) in store.sections" :key="index">
             <div class="d-flex justify-content-between rowHeader">
                 <h3 class="text-white row-title">{{ section.title }}</h3>
                 <ul class="pagination-indicator list-unstyled">
-                    <li></li>
-                    <li class="active"></li>
-                    <li></li>
+                    <li
+                        v-for="n in totalPages(index)"
+                        :key="n"
+                        :class="{ active: n === currentPages[index] }"></li>
                 </ul>
             </div>
             <div class="row-container">
@@ -68,7 +125,7 @@ export default {
                 <button class="btn-next" @click="scrollNext(index)">
                     <i class="fa-solid fa-angle-right"></i>
                 </button>
-                <button class="btn-prev" @click="scrollPrev(index)">
+                <button v-if="currentPages[index] > 1" class="btn-prev" @click="scrollPrev(index)">
                     <i class="fa-solid fa-angle-left"></i>
                 </button>
             </div>
