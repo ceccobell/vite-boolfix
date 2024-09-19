@@ -38,12 +38,16 @@ export default {
             }
         },
         updateItemsPerScreen() {
-            if (window.innerWidth <= 500) {
+            if (window.innerWidth <= 480) {
                 this.itemsPerScreen = 2
-            } else if (window.innerWidth <= 1000) {
+            } else if (window.innerWidth <= 800) {
                 this.itemsPerScreen = 3
-            } else {
+            } else if (window.innerWidth <= 1100) {
                 this.itemsPerScreen = 4
+            } else if (window.innerWidth <= 1400) {
+                this.itemsPerScreen = 5
+            } else {
+                this.itemsPerScreen = 6
             }
             // Assicura che lo sliderIndex sia valido dopo il cambiamento
             const maxIndex = this.progressBarItemCount - 1
@@ -66,7 +70,7 @@ export default {
 <template>
     <div class="row">
         <div class="header">
-            <h3 class="title text-white">Title</h3>
+            <h3 class="title text-white">{{ store.sections[0].title }}</h3>
             <div class="progress-bar">
                 <div
                     v-for="(item, index) in progressBarItemCount"
@@ -115,7 +119,7 @@ export default {
 
 .slider-item {
     flex: 1 0 calc(100% / var(--items-per-screen));
-    padding: 0 0.2vw;
+    padding: 2px;
 }
 
 .slider-item img {
@@ -174,12 +178,13 @@ export default {
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem calc(var(--img-gap) * 2 + var(--handle-size));
+    padding: 0% calc(4% + 4px);
+    padding-top: 4vw;
 }
 
 .title {
     font-size: 1.4vw;
-    line-height: 1.25vw;
+    vertical-align: middle;
 }
 
 .progress-item {
@@ -188,6 +193,7 @@ export default {
     margin-left: 1px;
     display: inline-block;
     background-color: rgba(255, 255, 255, 0.5);
+    vertical-align: middle;
 }
 
 .progress-item.active {

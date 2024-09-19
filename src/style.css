@@ -19,35 +19,6 @@
     width: 100%;
 }
 
-.col {
-    width: 50%;
-    flex: 0 0 auto;
-    padding: 2px;
-}
-
-@media (min-width: 480px) {
-    .col {
-        width: calc(100% / 3);
-    }
-}
-
-@media (min-width: 800px) {
-    .col {
-        width: 25%;
-    }
-}
-
-@media (min-width: 1100px) {
-    .col {
-        width: 20%;
-    }
-}
-
-@media (min-width: 1400px) {
-    .col {
-        width: calc(100% / 6);
-    }
-}
 /* ------------------ UTILITIES ----------------------- */
 .d-flex {
     display: flex;
@@ -85,6 +56,6 @@
     --font-size-lg: 20px;
     --font-size-xl: 24px;
     --font-size-xxl: 32px;
-    --handle-size: 4%;
+    --handle-size: 3rem;
     --img-gap: 0.2vw;
 }
