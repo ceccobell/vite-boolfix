@@ -9,11 +9,11 @@
     margin: 0 auto;
 }
 
-.row {
+/* .row {
     display: flex;
     flex-wrap: wrap;
     padding: 0 4%;
-}
+} */
 
 .col-100 {
     width: 100%;
@@ -85,4 +85,6 @@
     --font-size-lg: 20px;
     --font-size-xl: 24px;
     --font-size-xxl: 32px;
+    --handle-size: 4%;
+    --img-gap: 0.2vw;
 }

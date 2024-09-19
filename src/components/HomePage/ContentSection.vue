@@ -119,7 +119,7 @@ export default {
                         class="col d-flex">
                         <img
                             :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
-                            alt="immagine copertina" />
+                            :alt="content.name" />
                     </div>
                 </div>
                 <button class="btn-next" @click="scrollNext(index)">
@@ -190,7 +190,7 @@ img {
     font-size: var(--font-size-xxl);
     cursor: pointer;
     height: calc(100% - 4px);
-    width: 40px;
+    width: 4%;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
