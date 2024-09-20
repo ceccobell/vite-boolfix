@@ -31,7 +31,8 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, #141414, transparent 60%);
+    background: linear-gradient(to top, #141414, transparent 60%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent 6%);
     pointer-events: none;
 }
 </style>
