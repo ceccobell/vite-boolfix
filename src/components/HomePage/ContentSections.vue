@@ -23,6 +23,24 @@ export default {
                 axios.get(section.apiUrl).then((result) => {
                     this.contents[index] = result.data.results
                     this.sliderIndex[index] = 0
+                    this.contents[index].forEach((content) => {
+                        content["generi"] = []
+                        if (section.type === "tv") {
+                            store.serieTVgenresList.forEach((genres) => {
+                                if (content.genre_ids && content.genre_ids.includes(genres.id)) {
+                                    content.generi.push(genres.name)
+                                    console.log("content tv:", content)
+                                }
+                            })
+                        }
+                        if (section.type === "movie") {
+                            store.filmGenresList.forEach((genres) => {
+                                if (content.genre_ids && content.genre_ids.includes(genres.id)) {
+                                    content.generi.push(genres.name)
+                                }
+                            })
+                        }
+                    })
                 })
             })
         },
@@ -118,7 +136,14 @@ export default {
                                     <i class="fa-solid fa-angle-down"></i>
                                 </button>
                             </div>
-                            <div class="text-white">{{ content.name }}</div>
+                            <div class="text-white d-flex">
+                                <span
+                                    class="genere"
+                                    v-for="(genere, index) in content.generi"
+                                    :key="index"
+                                    >{{ genere }}</span
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -162,7 +187,7 @@ export default {
 }
 
 .info-card-overlay {
-    display: none;
+    display: block;
 }
 
 .slider-card:hover .info-card-overlay {
@@ -185,6 +210,12 @@ export default {
     height: 30px;
     width: 30px;
     margin-right: 5px;
+}
+
+.genere {
+    font-size: 10px;
+    white-space: normal;
+    margin-right: 4px;
 }
 
 .handle {
