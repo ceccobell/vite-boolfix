@@ -74,7 +74,7 @@ export default {
     <div class="container">
         <div class="row-slider">
             <div class="header">
-                <h3 class="title text-white">Top 10 dei film oggi</h3>
+                <h3 class="title text-white">Top 10 delle serie TV oggi</h3>
                 <div class="progress-bar">
                     <div
                         v-for="(item, index) in progressBarItemCount"
@@ -105,7 +105,10 @@ export default {
                             :alt="movie.title" />
                     </div>
                 </div>
-                <button class="handle right-handle" @click="onRightHandleClick()">
+                <button
+                    v-if="sliderIndex < progressBarItemCount - 1"
+                    class="handle right-handle"
+                    @click="onRightHandleClick()">
                     <div class="text">&#8250;</div>
                 </button>
             </div>
@@ -197,11 +200,14 @@ export default {
     justify-content: space-between;
     padding: 0% calc(4% + 4px);
     padding-top: 4vw;
+    line-height: 1.3;
 }
 
 .title {
     font-size: 1.4vw;
+    line-height: 1.25vw;
     vertical-align: middle;
+    padding-bottom: 10px;
 }
 
 .progress-item {

@@ -102,7 +102,10 @@ export default {
                             :alt="movie.title" />
                     </div>
                 </div>
-                <button class="handle right-handle" @click="onRightHandleClick()">
+                <button
+                    v-if="sliderIndex < progressBarItemCount - 1"
+                    class="handle right-handle"
+                    @click="onRightHandleClick()">
                     <div class="text">&#8250;</div>
                 </button>
             </div>
@@ -199,6 +202,7 @@ export default {
 .title {
     font-size: 1.4vw;
     vertical-align: middle;
+    padding-bottom: 10px;
 }
 
 .progress-item {

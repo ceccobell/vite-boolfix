@@ -23,5 +23,6 @@ export default {
 <style scoped>
 main {
     background-color: #141414;
+    padding-top: 70px;
 }
 </style>

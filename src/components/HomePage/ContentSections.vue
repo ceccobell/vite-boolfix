@@ -21,9 +21,8 @@ export default {
         getContents() {
             this.store.sections.forEach((section, index) => {
                 axios.get(section.apiUrl).then((result) => {
-                    // Inizializza contents e sliderIndex per ogni sezione
                     this.contents[index] = result.data.results
-                    this.sliderIndex[index] = 0 // Inizializza l'indice dello slider per ogni sezione
+                    this.sliderIndex[index] = 0
                 })
             })
         },
@@ -33,6 +32,8 @@ export default {
             } else {
                 this.sliderIndex[sectionIndex] -= 1
             }
+
+            console.log(Math.ceil(this.contents[sectionIndex]?.length / this.itemsPerScreen))
         },
         onRightHandleClick(sectionIndex) {
             if (this.sliderIndex[sectionIndex] + 1 >= this.progressBarItemCount(sectionIndex)) {
@@ -103,10 +104,13 @@ export default {
                         class="slider-item">
                         <img
                             :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
-                            alt="content image" />
+                            :alt="content.title" />
                     </div>
                 </div>
-                <button class="handle right-handle" @click="onRightHandleClick(sectionIndex)">
+                <button
+                    v-if="sliderIndex[sectionIndex] < progressBarItemCount(sectionIndex) - 1"
+                    class="handle right-handle"
+                    @click="onRightHandleClick(sectionIndex)">
                     <div class="text">&#8250;</div>
                 </button>
             </div>
@@ -137,7 +141,7 @@ export default {
 
 .slider-item img {
     width: 100%;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .handle {
@@ -193,11 +197,14 @@ export default {
     justify-content: space-between;
     padding: 0% calc(4% + 4px);
     padding-top: 4vw;
+    line-height: 1.3;
 }
 
 .title {
     font-size: 1.4vw;
+    line-height: 1.25vw;
     vertical-align: middle;
+    padding-bottom: 3px;
 }
 
 .progress-item {

@@ -55,42 +55,62 @@ export default {
 </script>
 
 <template>
-    <div class="container">
-        <div class="row bg-black">
-            <div class="col-100 d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    <h1>BOOLFLIX</h1>
-                    <ul class="list-unstyled d-flex">
-                        <li
-                            :class="item.selected ? 'text-active' : 'text-disabled'"
-                            v-for="(item, index) in navbarItems"
-                            :key="index"
-                            @click="selectItem(item)">
-                            {{ item.name }}
-                        </li>
-                    </ul>
-                </div>
-                <div class="search-wrapper">
-                    <!-- Icona della lente -->
-                    <button class="search-btn" type="button" @click="toggleSearch">
-                        <i class="fa-solid fa-magnifying-glass text-white"></i>
-                    </button>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-100 d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <h1>BOOLFLIX</h1>
+                        <ul class="list-unstyled d-flex">
+                            <li
+                                :class="item.selected ? 'text-active' : 'text-disabled'"
+                                v-for="(item, index) in navbarItems"
+                                :key="index"
+                                @click="selectItem(item)">
+                                {{ item.name }}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="search-wrapper">
+                        <!-- Icona della lente -->
+                        <button class="search-btn" type="button" @click="toggleSearch">
+                            <i class="fa-solid fa-magnifying-glass text-white"></i>
+                        </button>
 
-                    <!-- Campo di input che appare quando searchActive è true -->
-                    <input
-                        v-if="searchActive"
-                        type="text"
-                        v-model="searchQuery"
-                        class="form-control search-input"
-                        placeholder="Cerca film o serie..."
-                        @keyup.enter="performSearch" />
+                        <!-- Campo di input che appare quando searchActive è true -->
+                        <input
+                            v-if="searchActive"
+                            type="text"
+                            v-model="searchQuery"
+                            class="form-control search-input"
+                            placeholder="Cerca film o serie..."
+                            @keyup.enter="performSearch" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </header>
 </template>
 
 <style scoped>
+header {
+    position: fixed;
+    top: 0;
+    min-height: 70px;
+    width: 100%;
+    z-index: 100;
+    background: transparent;
+}
+
+.container {
+    min-height: 70px;
+}
+
+.row {
+    min-height: 70px;
+    padding-left: 4%;
+}
+
 .text-active {
     color: white;
 }
@@ -100,8 +120,9 @@ export default {
 }
 
 li {
-    margin: 5px 25px;
-    font-size: var(--font-size-sm);
+    margin-left: 18px;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
     cursor: pointer;
 }
 
