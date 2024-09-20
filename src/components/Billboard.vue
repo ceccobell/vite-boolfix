@@ -62,6 +62,19 @@ img {
     z-index: 10;
 }
 
+.info h1 {
+    font-size: 5vw;
+    width: 40%;
+    margin-bottom: 1.5vw;
+    vertical-align: bottom;
+}
+
+.info p {
+    width: 40%;
+    font-size: 1.2vw;
+    font-weight: 500;
+}
+
 .links {
     display: flex;
     line-height: 88%;
@@ -81,6 +94,11 @@ img {
 
 .riproduci-btn {
     background-color: white;
+    transition: background-color 0.2s ease;
+}
+
+.riproduci-btn:hover {
+    background-color: rgb(207, 207, 207);
 }
 
 .more-info-btn {
@@ -88,8 +106,12 @@ img {
     color: white;
     display: flex;
     align-items: center;
+    transition: background-color 0.2s ease;
 }
 
+.more-info-btn:hover {
+    background-color: rgba(109, 109, 110, 0.3);
+}
 .riproduci-btn span,
 .more-info-btn span:last-child {
     font-size: 14px;
