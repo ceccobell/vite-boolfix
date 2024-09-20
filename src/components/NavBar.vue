@@ -116,7 +116,7 @@ header {
 }
 
 .text-disabled {
-    color: rgb(193, 193, 193);
+    color: rgb(219, 219, 219);
 }
 
 li {
