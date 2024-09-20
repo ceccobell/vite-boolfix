@@ -100,6 +100,7 @@ header {
     width: 100%;
     z-index: 100;
     background: transparent;
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 10%, transparent);
 }
 
 .container {

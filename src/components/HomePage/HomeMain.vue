@@ -1,4 +1,5 @@
 <template>
+    <Billboard />
     <main>
         <Top10SerieTV />
         <Top10Movies />
@@ -7,6 +8,7 @@
 </template>
 
 <script>
+import Billboard from "../Billboard.vue"
 import Top10Movies from "../Top10Movies.vue"
 import Top10SerieTV from "../Top10SerieTV.vue"
 import ContentSection from "./ContentSections.vue"
@@ -16,6 +18,7 @@ export default {
         Top10SerieTV,
         Top10Movies,
         ContentSection,
+        Billboard,
     },
 }
 </script>
@@ -23,6 +26,6 @@ export default {
 <style scoped>
 main {
     background-color: #141414;
-    padding-top: 70px;
+    margin-top: -11%;
 }
 </style>
