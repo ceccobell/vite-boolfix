@@ -101,10 +101,22 @@ export default {
                     <div
                         v-for="(content, index) in contents[sectionIndex]"
                         :key="index"
-                        class="slider-item">
+                        class="slider-card">
                         <img
                             :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
                             :alt="content.title" />
+                        <div class="info-card-preview">
+                            <div class="links">
+                                <button><i class="fa-solid fa-play"></i></button>
+                                <button class="text-white">+</button>
+                                <button class="text-white">
+                                    <i class="fa-regular fa-thumbs-up"></i>
+                                </button>
+                                <button class="text-white">
+                                    <i class="fa-solid fa-angle-down"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button
@@ -134,14 +146,40 @@ export default {
     transform: translateX(calc(var(--slider-index) * -100%));
 }
 
-.slider-item {
+.slider-card {
     flex: 1 0 calc(100% / var(--items-per-screen));
     padding: 2px;
+    transition: scale 10.5s ease-in;
 }
 
-.slider-item img {
+.slider-card img {
     width: 100%;
     border-radius: 5px;
+}
+
+.info-card-preview {
+    opacity: 1;
+}
+
+.slider-card:hover .info-card-preview {
+    opacity: 1;
+}
+
+.links button:first-child {
+    background-color: white;
+    border: none;
+}
+
+.links {
+    width: 100%;
+}
+
+.links button {
+    background-color: transparent;
+    border: 2px solid gray;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
 }
 
 .handle {

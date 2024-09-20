@@ -1,7 +1,6 @@
 <script>
 import { store } from "../store"
 import axios from "axios"
-import "/node_modules/flag-icons/css/flag-icons.min.css"
 
 export default {
     data() {
@@ -17,6 +16,7 @@ export default {
                 { name: "La mia lista", url: "/lamialista", selected: false },
                 { name: "Sfoglia per lingua", url: "/sfogliaperlingua", selected: false },
             ],
+            isScrolled: false,
         }
     },
     methods: {
@@ -44,18 +44,21 @@ export default {
                 })
             }
         },
-        convertLanguageCode(languageCode) {
-            if (languageCode === "en") {
-                languageCode = "gb"
-            }
-            return languageCode
+        handleScroll() {
+            this.isScrolled = window.scrollY > 50
         },
+    },
+    mounted() {
+        window.addEventListener("scroll", this.handleScroll)
+    },
+    beforeUnmount() {
+        window.removeEventListener("scroll", this.handleScroll)
     },
 }
 </script>
 
 <template>
-    <header>
+    <header :class="isScrolled ? 'bg-black' : ''">
         <div class="container">
             <div class="row">
                 <div class="col-100 d-flex justify-content-between align-items-center">
@@ -99,7 +102,12 @@ header {
     min-height: 70px;
     width: 100%;
     z-index: 100;
-    background: transparent;
+    background-color: transparent;
+    transition: background-color 0.4s;
+}
+
+.bg-black {
+    background: #141414;
 }
 
 .container {
