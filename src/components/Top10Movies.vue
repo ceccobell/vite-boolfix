@@ -64,7 +64,7 @@ export default {
         this.updateItemsPerScreen()
         this.getTOP10movies()
     },
-    beforeUnmount() {
+    unmounted() {
         window.removeEventListener("resize", this.updateItemsPerScreen)
     },
 }

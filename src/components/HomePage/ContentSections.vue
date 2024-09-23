@@ -79,7 +79,7 @@ export default {
         this.updateItemsPerScreen()
         this.getContents()
     },
-    beforeUnmount() {
+    unmounted() {
         window.removeEventListener("resize", this.updateItemsPerScreen)
     },
 }
@@ -187,11 +187,11 @@ export default {
 }
 
 .info-card-overlay {
-    display: block;
+    display: none;
 }
 
 .slider-card:hover .info-card-overlay {
-    display: block;
+    display: none;
 }
 
 .info-card-overlay button:first-child {
@@ -215,7 +215,6 @@ export default {
 .genere {
     font-size: 10px;
     white-space: normal;
-    margin-right: 4px;
 }
 
 .handle {

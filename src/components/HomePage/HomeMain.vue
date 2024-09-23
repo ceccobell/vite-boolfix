@@ -26,6 +26,6 @@ export default {
 <style scoped>
 main {
     background-color: #141414;
-    margin-top: -11%;
+    margin-top: -8%;
 }
 </style>

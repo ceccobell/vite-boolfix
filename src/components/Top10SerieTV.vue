@@ -24,7 +24,7 @@ export default {
                     this.top10serieTV_list = result.data.results.slice(0, 10)
                 })
                 .catch((error) => {
-                    console.error("Errore nel recupero dei film:", error)
+                    console.error("Errore nel recupero delle serie TV:", error)
                 })
         },
         onLeftHandleClick() {
@@ -64,7 +64,7 @@ export default {
         this.updateItemsPerScreen()
         this.getTOP10serieTV()
     },
-    beforeUnmount() {
+    unmounted() {
         window.removeEventListener("resize", this.updateItemsPerScreen)
     },
 }
@@ -96,13 +96,13 @@ export default {
                         '--slider-index': sliderIndex,
                     }">
                     <div
-                        v-for="(movie, index) in top10serieTV_list"
+                        v-for="(serie, index) in top10serieTV_list"
                         :key="index"
                         class="slider-item">
                         <img :src="`/grafiche/${index + 1}.png`" alt="indice" />
                         <img
-                            :src="`http://image.tmdb.org/t/p/w342/${movie.poster_path}`"
-                            :alt="movie.title" />
+                            :src="`http://image.tmdb.org/t/p/w342/${serie.poster_path}`"
+                            :alt="serie.name" />
                     </div>
                 </div>
                 <button
@@ -117,6 +117,10 @@ export default {
 </template>
 
 <style scoped>
+.container {
+    position: relative;
+}
+
 .slider-container {
     display: flex;
     align-items: center;
@@ -199,7 +203,6 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 0% calc(4% + 4px);
-    padding-top: 4vw;
     line-height: 1.3;
 }
 

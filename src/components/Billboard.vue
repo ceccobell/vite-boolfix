@@ -52,7 +52,6 @@ img {
     height: 100%;
     background: linear-gradient(to top, #141414, transparent 60%),
         linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent 6%);
-    pointer-events: none;
 }
 
 .info {
@@ -66,7 +65,6 @@ img {
     font-size: 5vw;
     width: 40%;
     margin-bottom: 1.5vw;
-    vertical-align: bottom;
 }
 
 .info p {
