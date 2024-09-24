@@ -37,9 +37,6 @@ export default {
         showDropdown() {
             this.isDropdownVisible = true
         },
-        hideDropdown() {
-            this.isDropdownVisible = false
-        },
         performSearch() {
             if (this.searchQuery.trim()) {
                 // Solo se c'è una query
