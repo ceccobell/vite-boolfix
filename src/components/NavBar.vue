@@ -17,6 +17,7 @@ export default {
                 { name: "Sfoglia per lingua", url: "/sfogliaperlingua", selected: false },
             ],
             isScrolled: false,
+            isDropdownVisible: false,
         }
     },
     methods: {
@@ -32,6 +33,12 @@ export default {
             if (!this.searchActive) {
                 this.searchQuery = ""
             }
+        },
+        showDropdown() {
+            this.isDropdownVisible = true
+        },
+        hideDropdown() {
+            this.isDropdownVisible = false
         },
         performSearch() {
             if (this.searchQuery.trim()) {
@@ -64,20 +71,22 @@ export default {
                 <div class="col-100 d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                         <h1 class="logo">BOOLFLIX</h1>
-                        <ul class="drop-down-menu list-unstyled">
-                            <li>
+                        <div class="drop-down-menu" @mouseover="showDropdown">
+                            <div>
                                 <a class="navigation-menu text-white" href="">Sfoglia</a>
-                            </li>
-                            <li
-                                :class="item.selected ? 'text-active' : 'text-disabled'"
-                                class="navigation-tab"
-                                v-for="(item, index) in navbarItems"
-                                :key="index"
-                                @click="selectItem(item)">
-                                {{ item.name }}
-                            </li>
-                        </ul>
-                        <ul class="list-unstyled d-flex menu">
+                            </div>
+                            <ul v-show="isDropdownVisible" class="list-unstyled dropdown-content">
+                                <li
+                                    :class="item.selected ? 'text-active' : 'text-disabled'"
+                                    class="navigation-tab text-center"
+                                    v-for="(item, index) in navbarItems"
+                                    :key="index"
+                                    @click="selectItem(item)">
+                                    {{ item.name }}
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="list-unstyled menu">
                             <li
                                 :class="item.selected ? 'text-active' : 'text-disabled'"
                                 v-for="(item, index) in navbarItems"
@@ -122,8 +131,8 @@ header {
 .logo {
     color: #e50914;
     cursor: pointer;
-    font-size: 12px;
-    margin-right: 5px;
+    font-size: 18px;
+    margin-right: 15px;
     text-decoration: none;
     vertical-align: middle;
 }
@@ -151,6 +160,14 @@ header {
 
 .drop-down-menu {
     vertical-align: middle;
+    position: relative;
+}
+
+.drop-down-menu:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    visibility: visible;
 }
 
 .navigation-menu {
@@ -172,20 +189,40 @@ header {
     width: 0;
 }
 
-.navigation-tab {
-    display: none;
+.dropdown-content {
+    position: absolute;
+    top: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    background: hsla(0, 0%, 8%, 0.9);
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-li {
+.drop-down-menu li:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content li {
+    cursor: pointer;
+    text-align: center;
+    padding: 10px 0px;
+    font-size: var(--font-size-xs);
+}
+
+.dropdown-content li:hover {
+    background-color: #555;
+}
+
+.menu li {
     margin-left: 18px;
     font-size: var(--font-size-xs);
     font-weight: 600;
     cursor: pointer;
-}
-
-h1 {
-    color: #e50914;
-    font-size: var(--font-size-xl);
 }
 
 .search-wrapper {
@@ -226,5 +263,26 @@ h1 {
 
 .menu {
     display: none;
+}
+
+@media (min-width: 900px) {
+    .menu {
+        display: inline-block;
+        display: flex;
+    }
+
+    .drop-down-menu {
+        display: none;
+    }
+}
+
+@media (min-width: 950px) {
+    .row {
+        min-height: 70px;
+    }
+
+    .logo {
+        font-size: 25px;
+    }
 }
 </style>
