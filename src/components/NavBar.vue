@@ -63,8 +63,21 @@ export default {
             <div class="row">
                 <div class="col-100 d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
-                        <h1>BOOLFLIX</h1>
-                        <ul class="list-unstyled d-flex">
+                        <h1 class="logo">BOOLFLIX</h1>
+                        <ul class="drop-down-menu list-unstyled">
+                            <li>
+                                <a class="navigation-menu text-white" href="">Sfoglia</a>
+                            </li>
+                            <li
+                                :class="item.selected ? 'text-active' : 'text-disabled'"
+                                class="navigation-tab"
+                                v-for="(item, index) in navbarItems"
+                                :key="index"
+                                @click="selectItem(item)">
+                                {{ item.name }}
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled d-flex menu">
                             <li
                                 :class="item.selected ? 'text-active' : 'text-disabled'"
                                 v-for="(item, index) in navbarItems"
@@ -99,11 +112,20 @@ export default {
 header {
     position: fixed;
     top: 0;
-    min-height: 70px;
+    min-height: 41px;
     width: 100%;
     z-index: 100;
     background-color: transparent;
     transition: background-color 0.4s;
+}
+
+.logo {
+    color: #e50914;
+    cursor: pointer;
+    font-size: 12px;
+    margin-right: 5px;
+    text-decoration: none;
+    vertical-align: middle;
 }
 
 .bg-black {
@@ -111,12 +133,12 @@ header {
 }
 
 .container {
-    min-height: 70px;
+    min-height: 41px;
 }
 
 .row {
-    min-height: 70px;
-    padding-left: 4%;
+    min-height: 41px;
+    padding: 0 4%;
 }
 
 .text-active {
@@ -127,15 +149,38 @@ header {
     color: rgb(219, 219, 219);
 }
 
+.drop-down-menu {
+    vertical-align: middle;
+}
+
+.navigation-menu {
+    font-size: 10px;
+    align-items: center;
+    display: flex;
+    font-weight: 500;
+    height: 100%;
+    text-decoration: none;
+}
+
+.navigation-menu::after {
+    border-color: #fff transparent transparent;
+    border-style: solid;
+    border-width: 5px 5px 0;
+    content: "";
+    height: 0;
+    margin-left: 5px;
+    width: 0;
+}
+
+.navigation-tab {
+    display: none;
+}
+
 li {
     margin-left: 18px;
     font-size: var(--font-size-xs);
     font-weight: 600;
     cursor: pointer;
-}
-
-.col-100 {
-    padding: 10px;
 }
 
 h1 {
@@ -177,5 +222,9 @@ h1 {
     width: 200px;
     opacity: 1;
     transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.menu {
+    display: none;
 }
 </style>
