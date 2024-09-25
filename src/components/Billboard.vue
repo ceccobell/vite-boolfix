@@ -1,5 +1,10 @@
 <script>
+import BillboardCanvas from "./BillboardCanvas.vue"
+
 export default {
+    components: {
+        BillboardCanvas,
+    },
     data() {
         return {
             showCanvas: false,
@@ -9,8 +14,8 @@ export default {
         openCanvas() {
             this.showCanvas = true
         },
-        closeCanvas() {
-            this.showCanvas = false
+        closeCanvas(value) {
+            this.showCanvas = value
         },
     },
 }
@@ -41,30 +46,12 @@ export default {
             </div>
         </div>
     </div>
-    <div class="overlay" v-if="showCanvas"></div>
-    <div class="offCanvas" v-if="showCanvas">
-        <img
-            src="https://media-assets.wired.it/photos/615ee8daafaefdfb1ce8a4d5/master/w_1600%2Cc_limit/1443704186_0927_Walter_White_cog1.jpg"
-            alt="" />
-        <div class="info">
-            <h1 class="text-white">Breaking Bad</h1>
-            <p class="text-white">
-                Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III cancer and
-                given a prognosis of only two years left to live. He becomes filled with a sense of
-                fearlessness and an unrelenting desire to secure his family's financial future at
-                any cost as he enters the dangerous world of drugs and crime.
-            </p>
-            <div class="links">
-                <button class="riproduci-btn">
-                    <i class="fa-solid fa-play"></i>
-                    <span>Riproduci</span>
-                </button>
-            </div>
-        </div>
-        <button class="close-canvas" @click="closeCanvas">
-            <i class="fa-solid fa-x"></i>
-        </button>
-    </div>
+    <transition>
+        <div class="overlay" v-if="showCanvas"></div>
+    </transition>
+    <transition>
+        <BillboardCanvas v-if="showCanvas" @close-canva="closeCanvas" />
+    </transition>
 </template>
 
 <style scoped>
@@ -75,18 +62,6 @@ export default {
     overflow: hidden;
 }
 
-.offCanvas {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 950px;
-    border-radius: 6px;
-    overflow: hidden;
-    z-index: 1000;
-}
-
 .overlay {
     position: fixed;
     top: 0;
@@ -95,20 +70,6 @@ export default {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 900;
-}
-
-.close-canvas {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #181818;
-    border-radius: 50%;
-    height: 36px;
-    padding: 8px;
-    width: 36px;
-    color: white;
-    border: none;
-    cursor: pointer;
 }
 
 img {
@@ -207,5 +168,15 @@ img {
     align-items: center;
     justify-content: center;
     font-size: 18px;
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
 }
 </style>

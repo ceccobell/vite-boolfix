@@ -48,6 +48,10 @@
     list-style-type: none;
 }
 
+.mt-15 {
+    margin-top: 15px;
+}
+
 :root {
     --font-size-xxs: 10px;
     --font-size-xs: 12px;
