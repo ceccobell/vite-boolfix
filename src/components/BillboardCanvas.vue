@@ -24,6 +24,12 @@ export default {
                         <i class="fa-solid fa-play"></i>
                         <span>Riproduci</span>
                     </button>
+                    <button class="add-to-my-list">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <button class="like">
+                        <i class="fa-regular fa-thumbs-up"></i>
+                    </button>
                 </div>
             </div>
             <button class="close-canvas" @click="closeCanvas()">
@@ -59,7 +65,7 @@ export default {
 <style scoped>
 .offCanvas {
     position: absolute;
-    top: 10px;
+    top: 30px;
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
@@ -120,28 +126,46 @@ export default {
 
 .links {
     display: flex;
+    align-items: center;
     line-height: 88%;
     margin-top: 1.5vw;
     white-space: nowrap;
 }
 
 .links button {
-    margin-bottom: 1rem;
-    margin-right: 1rem;
-    padding: 7px 20px;
-    border: 0;
-    border-radius: 4px;
+    margin-right: 0.6rem;
     font-weight: 600;
     cursor: pointer;
 }
 
 .riproduci-btn {
     background-color: white;
+    padding: 7px 20px;
+    border: 0;
+    border-radius: 4px;
     transition: background-color 0.2s ease;
 }
 
 .riproduci-btn:hover {
     background-color: rgb(207, 207, 207);
+}
+
+.add-to-my-list,
+.like {
+    background-color: rgba(42, 42, 42, 0.6);
+    border: 2px solid hsla(0, 0%, 100%, 0.5);
+    border-radius: 100%;
+    color: white;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    font-weight: 200;
+}
+
+.add-to-my-list:hover,
+.like:hover {
+    border: 2px solid white;
+    background-color: rgba(79, 79, 79, 0.6);
 }
 
 .info {
