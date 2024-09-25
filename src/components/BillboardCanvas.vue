@@ -1,5 +1,10 @@
 <script>
+import CardSimilar from "./HomePage/CardSimilar.vue"
+
 export default {
+    components: {
+        CardSimilar,
+    },
     methods: {
         closeCanvas() {
             this.$emit("close-canva", false)
@@ -10,55 +15,54 @@ export default {
 
 <template>
     <div class="offCanvas">
-        <div class="content">
-            <div class="img-container">
-                <img
-                    src="https://media-assets.wired.it/photos/615ee8daafaefdfb1ce8a4d5/master/w_1600%2Cc_limit/1443704186_0927_Walter_White_cog1.jpg"
-                    alt=""
-                    class="img-canvas" />
+        <div class="img-container">
+            <img
+                src="https://media-assets.wired.it/photos/615ee8daafaefdfb1ce8a4d5/master/w_1600%2Cc_limit/1443704186_0927_Walter_White_cog1.jpg"
+                alt=""
+                class="img-canvas" />
+        </div>
+        <div class="title-buttons">
+            <h1 class="text-white">Breaking Bad</h1>
+            <div class="links">
+                <button class="riproduci-btn">
+                    <i class="fa-solid fa-play"></i>
+                    <span>Riproduci</span>
+                </button>
+                <button class="add-to-my-list">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="like">
+                    <i class="fa-regular fa-thumbs-up"></i>
+                </button>
             </div>
-            <div class="title-buttons">
-                <h1 class="text-white">Breaking Bad</h1>
-                <div class="links">
-                    <button class="riproduci-btn">
-                        <i class="fa-solid fa-play"></i>
-                        <span>Riproduci</span>
-                    </button>
-                    <button class="add-to-my-list">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                    <button class="like">
-                        <i class="fa-regular fa-thumbs-up"></i>
-                    </button>
-                </div>
+        </div>
+        <button class="close-canvas" @click="closeCanvas()">
+            <i class="fa-solid fa-x"></i>
+        </button>
+        <div class="info">
+            <div class="col-left">
+                <p class="text-white">
+                    Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III cancer
+                    and given a prognosis of only two years left to live. He becomes filled with a
+                    sense of fearlessness.
+                </p>
             </div>
-            <button class="close-canvas" @click="closeCanvas()">
-                <i class="fa-solid fa-x"></i>
-            </button>
-            <div class="info">
-                <div class="col-left">
-                    <p class="text-white">
-                        Walter White, a New Mexico chemistry teacher, is diagnosed with Stage III
-                        cancer and given a prognosis of only two years left to live. He becomes
-                        filled with a sense of fearlessness.
-                    </p>
+            <div class="col-right">
+                <div>
+                    <span class="tag-label">Cast:</span>
+                    <span class="tag-item">Bryan Cranston, </span>
+                    <span class="tag-item">Aaron Paul, </span>
+                    <span class="tag-item">Anna Gunn</span>
                 </div>
-                <div class="col-right">
-                    <div>
-                        <span class="tag-label">Cast:</span>
-                        <span class="tag-item">Bryan Cranston, </span>
-                        <span class="tag-item">Aaron Paul, </span>
-                        <span class="tag-item">Anna Gunn</span>
-                    </div>
-                    <div class="mt-15">
-                        <span class="tag-label">Generi:</span>
-                        <span class="tag-item">Bryan Cranston, </span>
-                        <span class="tag-item">Aaron Paul, </span>
-                        <span class="tag-item">Anna Gunn</span>
-                    </div>
+                <div class="mt-15">
+                    <span class="tag-label">Generi:</span>
+                    <span class="tag-item">Bryan Cranston, </span>
+                    <span class="tag-item">Aaron Paul, </span>
+                    <span class="tag-item">Anna Gunn</span>
                 </div>
             </div>
         </div>
+        <CardSimilar />
     </div>
 </template>
 
@@ -74,10 +78,6 @@ export default {
     overflow: hidden;
     z-index: 1000;
     background-color: #181818;
-}
-
-.content {
-    position: relative;
 }
 
 .img-container {
@@ -119,7 +119,7 @@ export default {
 .title-buttons {
     position: absolute;
     left: 4%;
-    bottom: 25%;
+    top: 30vw;
     z-index: 10;
     width: 40%;
 }

@@ -29,7 +29,6 @@ export default {
                             store.serieTVgenresList.forEach((genres) => {
                                 if (content.genre_ids && content.genre_ids.includes(genres.id)) {
                                     content.generi.push(genres.name)
-                                    console.log("content tv:", content)
                                 }
                             })
                         }
