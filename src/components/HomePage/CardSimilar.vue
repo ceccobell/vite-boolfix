@@ -19,8 +19,6 @@ export default {
                 this.similarContent = result.data.results
 
                 this.similarContent.forEach((contenuto) => {
-                    contenuto["number_of_seasons"] = ""
-                    contenuto["number_of_seasons"] = ""
                     axios
                         .get(
                             `https://api.themoviedb.org/3/tv/${contenuto.id}?api_key=23534135ecaf0f022b163c9be897d83b`
@@ -46,7 +44,12 @@ export default {
                     <img
                         :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
                         :alt="content.name" />
-                    <div>{{ content.number_of_episodes }}</div>
+                    <div class="duration" v-if="content.number_of_seasons === 1">
+                        {{ content.number_of_episodes }} episodi
+                    </div>
+                    <div class="duration" v-if="content.number_of_seasons > 1">
+                        {{ content.number_of_seasons }} stagioni
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,12 +77,42 @@ export default {
 }
 
 .card {
-    border-radius: 0px 0px 4px 4px;
+    border-radius: 4px;
 }
 
 img {
     width: 100%;
     height: auto;
     border-radius: 4px 4px 0px 0px;
+}
+
+.img-wrapper {
+    position: relative;
+}
+
+.img-wrapper::before {
+    background: linear-gradient(
+        198deg,
+        rgba(0, 0, 0, 0.9),
+        hsla(0, 0%, 9%, 0.5) 20%,
+        transparent 28%
+    );
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    border-radius: 4px;
+}
+
+.duration {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    white-space: nowrap;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
 }
 </style>
