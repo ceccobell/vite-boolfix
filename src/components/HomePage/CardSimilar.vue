@@ -44,10 +44,10 @@ export default {
                     <img
                         :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
                         :alt="content.name" />
-                    <div class="duration" v-if="content.number_of_seasons === 1">
+                    <div class="duration" v-show="content.number_of_seasons === 1">
                         {{ content.number_of_episodes }} episodi
                     </div>
-                    <div class="duration" v-if="content.number_of_seasons > 1">
+                    <div class="duration" v-show="content.number_of_seasons > 1">
                         {{ content.number_of_seasons }} stagioni
                     </div>
                 </div>

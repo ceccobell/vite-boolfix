@@ -1,13 +1,43 @@
 <script>
 import CardSimilar from "./HomePage/CardSimilar.vue"
+import axios from "axios"
 
 export default {
+    data() {
+        return {
+            infoCast: [],
+            genres: [],
+        }
+    },
     components: {
         CardSimilar,
+    },
+    mounted() {
+        this.getInfoCast()
+        this.getGenres()
     },
     methods: {
         closeCanvas() {
             this.$emit("close-canva", false)
+        },
+        getInfoCast() {
+            axios
+                .get(
+                    "https://api.themoviedb.org/3/tv/1396/credits?api_key=23534135ecaf0f022b163c9be897d83b"
+                )
+                .then((result) => {
+                    this.infoCast = result.data.cast
+                })
+        },
+        getGenres() {
+            axios
+                .get(
+                    "https://api.themoviedb.org/3/tv/1396?api_key=23534135ecaf0f022b163c9be897d83b"
+                )
+                .then((result) => {
+                    this.genres = result.data.genres
+                    console.log(this.genres)
+                })
         },
     },
 }
@@ -49,16 +79,20 @@ export default {
             </div>
             <div class="col-right">
                 <div>
-                    <span class="tag-label">Cast:</span>
-                    <span class="tag-item">Bryan Cranston, </span>
-                    <span class="tag-item">Aaron Paul, </span>
-                    <span class="tag-item">Anna Gunn</span>
+                    <span class="tag-label">Cast: </span>
+                    <span
+                        v-for="(actor, index) in infoCast"
+                        v-show="actor.known_for_department === 'Acting'"
+                        :key="actor.id"
+                        class="tag-item"
+                        >{{ actor.name }},
+                    </span>
                 </div>
                 <div class="mt-15">
-                    <span class="tag-label">Generi:</span>
-                    <span class="tag-item">Bryan Cranston, </span>
-                    <span class="tag-item">Aaron Paul, </span>
-                    <span class="tag-item">Anna Gunn</span>
+                    <span class="tag-label">Generi: </span>
+                    <span v-for="(genre, index) in genres" :key="genre.id" class="tag-item"
+                        >{{ genre.name }},
+                    </span>
                 </div>
             </div>
         </div>
@@ -72,7 +106,7 @@ export default {
     top: 30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 90%;
     max-width: 950px;
     border-radius: 6px;
     overflow: hidden;
