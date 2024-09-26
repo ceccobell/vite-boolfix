@@ -50,20 +50,20 @@ export default {
                 src="https://media-assets.wired.it/photos/615ee8daafaefdfb1ce8a4d5/master/w_1600%2Cc_limit/1443704186_0927_Walter_White_cog1.jpg"
                 alt=""
                 class="img-canvas" />
-        </div>
-        <div class="title-buttons">
-            <h1 class="text-white">Breaking Bad</h1>
-            <div class="links">
-                <button class="riproduci-btn">
-                    <i class="fa-solid fa-play"></i>
-                    <span>Riproduci</span>
-                </button>
-                <button class="add-to-my-list">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
-                <button class="like">
-                    <i class="fa-regular fa-thumbs-up"></i>
-                </button>
+            <div class="title-buttons">
+                <h1 class="text-white">Breaking Bad</h1>
+                <div class="links">
+                    <button class="riproduci-btn">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Riproduci</span>
+                    </button>
+                    <button class="add-to-my-list">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <button class="like">
+                        <i class="fa-regular fa-thumbs-up"></i>
+                    </button>
+                </div>
             </div>
         </div>
         <button class="close-canvas" @click="closeCanvas()">
@@ -81,17 +81,18 @@ export default {
                 <div>
                     <span class="tag-label">Cast: </span>
                     <span
-                        v-for="(actor, index) in infoCast"
+                        v-for="(actor, index) in infoCast.slice(0, 3)"
                         v-show="actor.known_for_department === 'Acting'"
                         :key="actor.id"
-                        class="tag-item"
-                        >{{ actor.name }},
+                        class="tag-item">
+                        {{ actor.name }}<span v-show="index < 3">, </span>
                     </span>
+                    <span class="tag-item" v-show="infoCast.length > 3">altro</span>
                 </div>
                 <div class="mt-15">
                     <span class="tag-label">Generi: </span>
                     <span v-for="(genre, index) in genres" :key="genre.id" class="tag-item"
-                        >{{ genre.name }},
+                        >{{ genre.name }}<span v-show="index < genres.length - 1">, </span>
                     </span>
                 </div>
             </div>
@@ -153,9 +154,13 @@ export default {
 .title-buttons {
     position: absolute;
     left: 4%;
-    top: 30vw;
+    bottom: 10%;
     z-index: 10;
-    width: 40%;
+    width: 100%;
+}
+
+.title-buttons {
+    font-size: 2vw;
 }
 
 .links {

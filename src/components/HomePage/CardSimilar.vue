@@ -51,6 +51,15 @@ export default {
                         {{ content.number_of_seasons }} stagioni
                     </div>
                 </div>
+                <div class="card-info">
+                    <div class="title d-flex justify-content-between align-items-center">
+                        <h4 class="text-white">{{ content.name }}</h4>
+                        <button class="add-to-my-list">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                    <p>{{ content.overview }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -70,24 +79,28 @@ export default {
 
 .more-like-this-container {
     grid-gap: 1em;
-    align-items: stretch;
     display: grid;
-    justify-items: stretch;
     grid-template-columns: repeat(2, 1fr);
 }
 
 .card {
     border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    overflow: hidden;
 }
 
 img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     border-radius: 4px 4px 0px 0px;
 }
 
 .img-wrapper {
     position: relative;
+    height: 200px;
 }
 
 .img-wrapper::before {
@@ -114,5 +127,53 @@ img {
     color: white;
     font-weight: 600;
     font-size: 16px;
+}
+
+.card-info {
+    background-color: #2f2f2f;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 200px;
+}
+
+.card-info h4 {
+    font-size: 16px;
+}
+
+.add-to-my-list {
+    background-color: rgba(42, 42, 42, 0.6);
+    border: 2px solid hsla(0, 0%, 100%, 0.5);
+    border-radius: 100%;
+    color: white;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.add-to-my-list:hover {
+    border: 2px solid white;
+    background-color: rgba(79, 79, 79, 0.6);
+}
+
+.title {
+    height: 20px;
+}
+
+.card-info p {
+    color: #d2d2d2;
+    font-size: 14px;
+    margin-top: 20px;
+    height: 180px;
+    overflow-y: auto;
+    overflow-y: hidden;
+}
+
+@media (min-width: 900px) {
+    .more-like-this-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 </style>
