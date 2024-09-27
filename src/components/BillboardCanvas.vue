@@ -36,7 +36,6 @@ export default {
                 )
                 .then((result) => {
                     this.genres = result.data.genres
-                    console.log(this.genres)
                 })
         },
     },
@@ -160,7 +159,7 @@ export default {
 }
 
 .title-buttons {
-    font-size: 2vw;
+    font-size: 2.5vw;
 }
 
 .links {

@@ -121,7 +121,7 @@ export default {
                         class="slider-card">
                         <img
                             :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
-                            :alt="content.title" />
+                            :alt="content.name" />
                         <div class="info-card-overlay">
                             <div class="d-flex justify-content-between">
                                 <div>
