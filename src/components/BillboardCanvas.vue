@@ -1,5 +1,5 @@
 <script>
-import CardSimilar from "./HomePage/CardSimilar.vue"
+import CardSimilar from "./HomePage/CardsSimilar.vue"
 import axios from "axios"
 
 export default {

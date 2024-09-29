@@ -20,6 +20,21 @@ export default {
             isDropdownVisible: false,
         }
     },
+    watch: {
+        searchQuery(newQuery) {
+            if (newQuery.trim()) {
+                // Chiamata API per i film
+                axios.get(store.apiUrlMovies + newQuery).then((result) => {
+                    store.moviesList = result.data.results
+                })
+
+                // Chiamata API per le serie TV
+                axios.get(store.apiUrlSerieTV + newQuery).then((result) => {
+                    store.serieTV_list = result.data.results
+                })
+            }
+        },
+    },
     methods: {
         selectItem(selectedItem) {
             this.navbarItems.forEach((item) => {
@@ -31,22 +46,11 @@ export default {
         toggleSearch() {
             this.searchActive = !this.searchActive
             if (!this.searchActive) {
-                this.searchQuery = ""
+                store.searchQuery = ""
             }
         },
         showDropdown() {
             this.isDropdownVisible = true
-        },
-        performSearch() {
-            if (this.searchQuery.trim()) {
-                // Solo se c'è una query
-                axios.get(store.apiUrlMovies + this.searchQuery).then((result) => {
-                    store.moviesList = result.data.results
-                })
-                axios.get(store.apiUrlSerieTV + this.searchQuery).then((result) => {
-                    store.serieTV_list = result.data.results
-                })
-            }
         },
         handleScroll() {
             this.isScrolled = window.scrollY > 50
@@ -93,7 +97,7 @@ export default {
                             </li>
                         </ul>
                     </div>
-                    <div class="search-wrapper">
+                    <div class="search-wrapper" :class="{ 'search-active': searchActive }">
                         <!-- Icona della lente -->
                         <button class="search-btn" type="button" @click="toggleSearch">
                             <i class="fa-solid fa-magnifying-glass text-white"></i>
@@ -101,12 +105,11 @@ export default {
 
                         <!-- Campo di input che appare quando searchActive è true -->
                         <input
-                            v-if="searchActive"
+                            v-show="searchActive"
                             type="text"
-                            v-model="searchQuery"
-                            class="form-control search-input"
-                            placeholder="Cerca film o serie..."
-                            @keyup.enter="performSearch" />
+                            v-model="this.searchQuery"
+                            class="search-input"
+                            placeholder="Cerca film o serie..." />
                     </div>
                 </div>
             </div>
@@ -226,36 +229,43 @@ header {
     display: flex;
     align-items: center;
     position: relative;
+    padding: 0 6px;
+}
+
+.search-wrapper.search-active {
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid hsla(0, 0%, 100%, 0.85);
 }
 
 .search-btn {
     background: none;
     border: none;
     color: white;
-    font-size: var(--font-size-xl);
+    font-size: 18px;
     cursor: pointer;
 }
 
 .search-input {
+    background: transparent;
+    border: none;
+    box-sizing: border-box;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    outline: none;
+    padding: 7px 14px 7px 7px;
     width: 0;
     opacity: 0;
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ced4da;
-    border-radius: 10px;
-    background-color: #e9ecef;
-    transition: all 0.3s ease;
-    margin-left: 10px;
+    transition: width 1.3s ease, opacity 1.3s ease;
 }
 
 .search-input::placeholder {
     color: #6c757d;
 }
 
-.search-wrapper input {
+.search-active .search-input {
     width: 200px;
     opacity: 1;
-    transition: width 0.3s ease, opacity 0.3s ease;
 }
 
 .menu {
