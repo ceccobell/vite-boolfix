@@ -97,6 +97,25 @@ export default {
             </div>
         </div>
         <CardSimilar />
+        <div class="more-info">
+            <h3>Info su Breaking Bad</h3>
+            <div>
+                <span class="tag-label">Regia: </span>
+                <span class="tag-item">Vince Gilligan</span>
+            </div>
+            <div>
+                <span class="tag-label">Cast: </span>
+                <span v-for="(actor, index) in infoCast" :key="actor.id" class="tag-item">
+                    {{ actor.name }}<span v-show="index < infoCast.length - 1">, </span>
+                </span>
+            </div>
+            <div>
+                <span class="tag-label">Generi: </span>
+                <span v-for="(genre, index) in genres" :key="genre.id" class="tag-item"
+                    >{{ genre.name }}<span v-show="index < genres.length - 1">, </span>
+                </span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -235,5 +254,18 @@ export default {
 .tag-item {
     color: white;
     font-size: 14px;
+}
+
+.more-info {
+    padding: 0 4%;
+    color: white;
+    font-size: 16px;
+    padding-bottom: 50px;
+    line-height: 20px;
+}
+
+.more-info h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 </style>
