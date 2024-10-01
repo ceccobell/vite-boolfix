@@ -119,29 +119,15 @@ export default {
                         v-for="(content, index) in contents[sectionIndex]"
                         :key="index"
                         class="slider-card">
-                        <img
-                            :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
-                            :alt="content.name" />
-                        <div class="info-card-overlay">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <button><i class="fa-solid fa-play"></i></button>
-                                    <button class="text-white">+</button>
-                                    <button class="text-white">
-                                        <i class="fa-regular fa-thumbs-up"></i>
-                                    </button>
-                                </div>
-                                <button class="text-white">
-                                    <i class="fa-solid fa-angle-down"></i>
-                                </button>
+                        <div>
+                            <img
+                                :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
+                                :alt="content.name" />
+                            <div v-show="content.name" class="title-content">
+                                {{ content.name }}
                             </div>
-                            <div class="text-white d-flex">
-                                <span
-                                    class="genere"
-                                    v-for="(genere, index) in content.generi"
-                                    :key="index"
-                                    >{{ genere }}</span
-                                >
+                            <div v-show="content.title" class="title-content">
+                                {{ content.title }}
                             </div>
                         </div>
                     </div>
@@ -176,7 +162,7 @@ export default {
 .slider-card {
     flex: 1 0 calc(100% / var(--items-per-screen));
     padding: 2px;
-    transition: scale 0.5s ease-in;
+    cursor: pointer;
     position: relative;
 }
 
@@ -185,35 +171,28 @@ export default {
     border-radius: 5px;
 }
 
-.info-card-overlay {
-    display: none;
+.slider-card::before {
+    background: linear-gradient(
+        198deg,
+        rgba(0, 0, 0, 0.9),
+        hsla(0, 0%, 9%, 0.5) 20%,
+        transparent 28%
+    );
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    border-radius: 4px;
 }
 
-.slider-card:hover .info-card-overlay {
-    display: none;
-}
-
-.info-card-overlay button:first-child {
-    background-color: white;
-    border: none;
-}
-
-.info-card-overlay {
-    width: 100%;
-}
-
-.info-card-overlay button {
-    background-color: transparent;
-    border: 2px solid gray;
-    border-radius: 100%;
-    height: 30px;
-    width: 30px;
-    margin-right: 5px;
-}
-
-.genere {
+.title-content {
+    color: white;
     font-size: 10px;
-    white-space: normal;
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 
 .handle {

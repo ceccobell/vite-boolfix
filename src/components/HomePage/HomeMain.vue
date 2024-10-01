@@ -1,17 +1,22 @@
 <template>
-    <Billboard />
-    <main>
-        <Top10SerieTV />
-        <Top10Movies />
-        <ContentSection />
-    </main>
+    <SearchResults v-if="store.searchQuery.length > 0" />
+    <div v-else>
+        <Billboard />
+        <main>
+            <Top10SerieTV />
+            <Top10Movies />
+            <ContentSection />
+        </main>
+    </div>
 </template>
 
 <script>
 import Billboard from "../Billboard.vue"
+import SearchResults from "../SearchResults.vue"
 import Top10Movies from "../Top10Movies.vue"
 import Top10SerieTV from "../Top10SerieTV.vue"
 import ContentSection from "./ContentSections.vue"
+import { store } from "../../store"
 
 export default {
     components: {
@@ -19,6 +24,12 @@ export default {
         Top10Movies,
         ContentSection,
         Billboard,
+        SearchResults,
+    },
+    data() {
+        return {
+            store,
+        }
     },
 }
 </script>

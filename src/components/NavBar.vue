@@ -7,7 +7,6 @@ export default {
         return {
             store,
             searchActive: false,
-            searchQuery: "",
             navbarItems: [
                 { name: "Home", url: "/", selected: true },
                 { name: "Serie Tv", url: "/tv", selected: false },
@@ -21,7 +20,7 @@ export default {
         }
     },
     watch: {
-        searchQuery(newQuery) {
+        "store.searchQuery"(newQuery) {
             if (newQuery.trim()) {
                 // Chiamata API per i film
                 axios.get(store.apiUrlMovies + newQuery).then((result) => {
@@ -107,7 +106,7 @@ export default {
                         <input
                             v-show="searchActive"
                             type="text"
-                            v-model="this.searchQuery"
+                            v-model="store.searchQuery"
                             class="search-input"
                             placeholder="Cerca film o serie..." />
                     </div>
