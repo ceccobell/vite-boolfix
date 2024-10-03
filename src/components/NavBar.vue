@@ -1,8 +1,12 @@
 <script>
 import { store } from "../store"
 import axios from "axios"
+import AuthForm from "./AuthForm.vue"
 
 export default {
+    components: {
+        AuthForm,
+    },
     data() {
         return {
             store,
@@ -17,6 +21,7 @@ export default {
             ],
             isScrolled: false,
             isDropdownVisible: false,
+            isAuthFormVisible: false,
         }
     },
     watch: {
@@ -53,6 +58,12 @@ export default {
         },
         handleScroll() {
             this.isScrolled = window.scrollY > 50
+        },
+        showAuthForm() {
+            this.isAuthFormVisible = !this.isAuthFormVisible
+        },
+        closeCanvas(value) {
+            this.isAuthFormVisible = value
         },
     },
     mounted() {
@@ -109,10 +120,19 @@ export default {
                             v-model="store.searchQuery"
                             class="search-input"
                             placeholder="Cerca film o serie..." />
+                        <button class="user-btn" @click="showAuthForm">
+                            <i class="fa-regular fa-user"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+        <transition>
+            <div class="overlay" v-if="isAuthFormVisible"></div>
+        </transition>
+        <transition>
+            <AuthForm v-if="isAuthFormVisible" @close-canva="closeCanvas" />
+        </transition>
     </header>
 </template>
 
@@ -269,6 +289,16 @@ header {
 
 .menu {
     display: none;
+}
+
+.user-btn {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    margin-left: 20px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
 }
 
 @media (min-width: 900px) {

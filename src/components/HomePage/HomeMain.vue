@@ -4,8 +4,8 @@
         <Billboard />
         <main>
             <Top10SerieTV />
-            <Top10Movies />
             <ContentSection />
+            <Top10Movies />
         </main>
     </div>
 </template>

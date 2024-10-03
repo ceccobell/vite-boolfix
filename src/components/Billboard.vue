@@ -62,16 +62,6 @@ export default {
     overflow: hidden;
 }
 
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 900;
-}
-
 img {
     width: 100%;
     height: auto;
@@ -168,15 +158,5 @@ img {
     align-items: center;
     justify-content: center;
     font-size: 18px;
-}
-
-.v-enter-active,
-.v-leave-active {
-    transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
 }
 </style>
