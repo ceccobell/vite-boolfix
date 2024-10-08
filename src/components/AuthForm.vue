@@ -1,9 +1,16 @@
 <script>
+import axios from "axios"
+
 export default {
     data() {
         return {
             loginActive: true,
             registerActive: false,
+            loginEmail: "",
+            loginPassword: "",
+            registerEmail: "",
+            registerPassword: "",
+            registerPasswordConfirm: "",
         }
     },
     methods: {
@@ -13,6 +20,33 @@ export default {
         },
         closeCanvas() {
             this.$emit("close-canva", false)
+        },
+        async login() {
+            try {
+                const response = await axios.post("http://127.0.0.1:8000/login", {
+                    email: this.loginEmail,
+                    password: this.loginPassword,
+                })
+
+                console.log(response.data)
+            } catch (error) {
+                console.error(error.response.data)
+            }
+        },
+
+        // Metodo per la registrazione
+        async register() {
+            try {
+                const response = await axios.post("http://127.0.0.1:8000/register", {
+                    email: this.registerEmail,
+                    password: this.registerPassword,
+                    password_confirmation: this.registerPasswordConfirm,
+                })
+
+                console.log(response.data)
+            } catch (error) {
+                console.error(error.response.data)
+            }
         },
     },
 }
@@ -35,32 +69,38 @@ export default {
             </button>
         </div>
 
+        <!-- Form di Login -->
         <div class="tab-content" id="login" v-if="loginActive">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input id="email" type="email" placeholder="m@example.com" />
+                <input id="email" type="email" v-model="loginEmail" placeholder="m@example.com" />
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input id="password" type="password" />
+                <input id="password" type="password" v-model="loginPassword" />
             </div>
-            <button class="submit-button">Accedi</button>
+            <button class="submit-button" @click="login">Accedi</button>
         </div>
 
+        <!-- Form di Registrazione -->
         <div class="tab-content" id="register" v-if="registerActive">
             <div class="form-group">
                 <label for="new-email">Email</label>
-                <input id="new-email" type="email" placeholder="m@example.com" />
+                <input
+                    id="new-email"
+                    type="email"
+                    v-model="registerEmail"
+                    placeholder="m@example.com" />
             </div>
             <div class="form-group">
                 <label for="new-password">Password</label>
-                <input id="new-password" type="password" />
+                <input id="new-password" type="password" v-model="registerPassword" />
             </div>
             <div class="form-group">
                 <label for="confirm-password">Conferma Password</label>
-                <input id="confirm-password" type="password" />
+                <input id="confirm-password" type="password" v-model="registerPasswordConfirm" />
             </div>
-            <button class="submit-button">Registrati</button>
+            <button class="submit-button" @click="register">Registrati</button>
         </div>
     </div>
 </template>

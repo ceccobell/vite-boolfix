@@ -1,6 +1,6 @@
 <template>
     <NavBar />
-    <HomeMain />
+    <routerView />
 </template>
 
 <script>
