@@ -114,6 +114,10 @@ export default {
 </template>
 
 <style scoped>
+.container {
+    position: relative;
+}
+
 .slider-container {
     display: flex;
     align-items: center;

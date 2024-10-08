@@ -88,22 +88,28 @@ export default {
                             </div>
                             <ul v-show="isDropdownVisible" class="list-unstyled dropdown-content">
                                 <li
-                                    :class="item.selected ? 'text-active' : 'text-disabled'"
-                                    class="navigation-tab text-center"
                                     v-for="(item, index) in navbarItems"
                                     :key="index"
                                     @click="selectItem(item)">
-                                    {{ item.name }}
+                                    <router-link
+                                        :to="item.url"
+                                        :class="item.selected ? 'text-active' : 'text-disabled'"
+                                        class="navigation-tab text-center">
+                                        {{ item.name }}
+                                    </router-link>
                                 </li>
                             </ul>
                         </div>
                         <ul class="list-unstyled menu">
                             <li
-                                :class="item.selected ? 'text-active' : 'text-disabled'"
                                 v-for="(item, index) in navbarItems"
                                 :key="index"
                                 @click="selectItem(item)">
-                                {{ item.name }}
+                                <router-link
+                                    :to="item.url"
+                                    :class="item.selected ? 'text-active' : 'text-disabled'">
+                                    {{ item.name }}
+                                </router-link>
                             </li>
                         </ul>
                     </div>
@@ -171,10 +177,12 @@ header {
 
 .text-active {
     color: white;
+    text-decoration: none;
 }
 
 .text-disabled {
     color: rgb(219, 219, 219);
+    text-decoration: none;
 }
 
 .drop-down-menu {

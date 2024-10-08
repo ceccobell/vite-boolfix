@@ -5,7 +5,7 @@
 
 <script>
 import NavBar from "./components/NavBar.vue"
-import HomeMain from "./components/HomePage/HomeMain.vue"
+import HomeMain from "./components/pages/HomePage.vue"
 import { store } from "./store"
 import axios from "axios"
 
