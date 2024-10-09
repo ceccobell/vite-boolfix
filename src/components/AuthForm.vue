@@ -33,10 +33,10 @@ export default {
                 })
                 .then((response) => {
                     console.log("Login successful:", response.data)
-                    localStorage.setItem("authToken", response.data.access_token) // Usa 'access_token' qui
-                    console.log("Token saved:", localStorage.getItem("authToken")) // Dovrebbe stampare il token
+                    localStorage.setItem("authToken", response.data.access_token)
                     store.isAuthenticated = true
                     this.closeCanvas()
+                    axios.defaults.withCredentials = false
                 })
                 .catch((error) => {
                     console.error("Login error:", error.response.data)
@@ -53,9 +53,8 @@ export default {
                 })
                 .then((response) => {
                     console.log("Registration successful:", response.data)
-                    localStorage.setItem("authToken", response.data.token) // Assicurati che sia 'response.data.token'
-                    console.log("Token saved:", localStorage.getItem("authToken")) // Dovrebbe stampare il token
-                    // Resetta i campi del form
+                    localStorage.setItem("authToken", response.data.token)
+                    axios.defaults.withCredentials = false
                     this.form.name = ""
                     this.form.email = ""
                     this.form.password = ""

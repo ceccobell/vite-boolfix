@@ -84,6 +84,7 @@ export default {
                     console.log("Logout successful")
                     localStorage.removeItem("authToken")
                     store.isAuthenticated = false
+                    axios.defaults.withCredentials = false
                 })
                 .catch((error) => {
                     console.error("Logout error:", error.response.data)
