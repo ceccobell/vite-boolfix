@@ -24,6 +24,7 @@ export default {
             isAuthFormVisible: false,
         }
     },
+
     watch: {
         "store.searchQuery"(newQuery) {
             if (newQuery.trim()) {
@@ -93,6 +94,7 @@ export default {
     },
     mounted() {
         window.addEventListener("scroll", this.handleScroll)
+        store.isAuthenticated = !!localStorage.getItem("authToken")
     },
     beforeUnmount() {
         window.removeEventListener("scroll", this.handleScroll)
