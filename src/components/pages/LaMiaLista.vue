@@ -1,7 +1,6 @@
 <template>
     <SearchResults v-if="store.searchQuery.length > 0" />
     <div v-else>
-        <Billboard />
         <main>
             <Top10SerieTV />
             <ContentSection />
@@ -11,7 +10,6 @@
 </template>
 
 <script>
-import Billboard from "../Billboard.vue"
 import SearchResults from "../SearchResults.vue"
 import Top10Movies from "../Top10Movies.vue"
 import Top10SerieTV from "../Top10SerieTV.vue"
@@ -23,7 +21,6 @@ export default {
         Top10SerieTV,
         Top10Movies,
         ContentSection,
-        Billboard,
         SearchResults,
     },
     data() {
@@ -37,6 +34,6 @@ export default {
 <style scoped>
 main {
     background-color: #141414;
-    margin-top: -8%;
+    padding-top: 100px;
 }
 </style>
