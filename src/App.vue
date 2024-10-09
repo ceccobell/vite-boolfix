@@ -30,10 +30,36 @@ export default {
                 store.serieTVgenresList = result.data.genres
             })
         },
+        fetchMyList() {
+            const token = localStorage.getItem("authToken")
+            axios
+                .get("http://127.0.0.1:8000/api/favorites", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    this.favorites = response.data
+                    this.favorites.forEach((favorite) => {
+                        axios
+                            .get(
+                                `https://api.themoviedb.org/3/${favorite.type}/${favorite.item_id}?api_key=23534135ecaf0f022b163c9be897d83b`
+                            )
+                            .then((result) => {
+                                store.myList.push(result.data)
+                            })
+                    })
+                    console.log("Preferiti recuperati:", this.favorites)
+                })
+                .catch((error) => {
+                    console.error("Errore nel recupero dei preferiti:", error.response.data)
+                })
+        },
     },
     mounted() {
         this.getFilmGenres()
         this.getSerieTVgenres()
+        this.fetchMyList()
     },
 }
 </script>
