@@ -1,11 +1,13 @@
 <script>
 import axios from "axios"
+import { store } from "../store"
 
 export default {
     data() {
         return {
             loginActive: true,
             registerActive: false,
+            store,
             form: {
                 name: "",
                 email: "",
@@ -31,7 +33,10 @@ export default {
                 })
                 .then((response) => {
                     console.log("Login successful:", response.data)
-                    localStorage.setItem("authToken", response.data.token)
+                    localStorage.setItem("authToken", response.data.access_token) // Usa 'access_token' qui
+                    console.log("Token saved:", localStorage.getItem("authToken")) // Dovrebbe stampare il token
+                    store.isAuthenticated = true
+                    this.closeCanvas()
                 })
                 .catch((error) => {
                     console.error("Login error:", error.response.data)
@@ -48,7 +53,13 @@ export default {
                 })
                 .then((response) => {
                     console.log("Registration successful:", response.data)
-                    localStorage.setItem("authToken", response.data.token)
+                    localStorage.setItem("authToken", response.data.token) // Assicurati che sia 'response.data.token'
+                    console.log("Token saved:", localStorage.getItem("authToken")) // Dovrebbe stampare il token
+                    // Resetta i campi del form
+                    this.form.name = ""
+                    this.form.email = ""
+                    this.form.password = ""
+                    this.form.password_confirmation = ""
                 })
                 .catch((error) => {
                     console.error("Registration error:", error.response.data)

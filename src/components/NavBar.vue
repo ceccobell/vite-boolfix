@@ -65,6 +65,30 @@ export default {
         closeCanvas(value) {
             this.isAuthFormVisible = value
         },
+        logout() {
+            axios.defaults.withCredentials = true
+
+            const token = localStorage.getItem("authToken")
+
+            axios
+                .post(
+                    "http://127.0.0.1:8000/api/logout",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                )
+                .then(() => {
+                    console.log("Logout successful")
+                    localStorage.removeItem("authToken")
+                    store.isAuthenticated = false
+                })
+                .catch((error) => {
+                    console.error("Logout error:", error.response.data)
+                })
+        },
     },
     mounted() {
         window.addEventListener("scroll", this.handleScroll)
@@ -126,8 +150,14 @@ export default {
                             v-model="store.searchQuery"
                             class="search-input"
                             placeholder="Cerca film o serie..." />
-                        <button class="user-btn" @click="showAuthForm">
-                            <i class="fa-regular fa-user"></i>
+                        <button
+                            v-if="!store.isAuthenticated"
+                            class="user-btn"
+                            @click="showAuthForm">
+                            SIGN IN
+                        </button>
+                        <button v-if="store.isAuthenticated" class="user-btn" @click="logout">
+                            SIGN OUT
                         </button>
                     </div>
                 </div>
