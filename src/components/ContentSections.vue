@@ -25,6 +25,7 @@ export default {
                     this.sliderIndex[index] = 0
                     this.contents[index].forEach((content) => {
                         content["generi"] = []
+                        content["type"] = section.type
                         if (section.type === "tv") {
                             store.serieTVgenresList.forEach((genres) => {
                                 if (content.genre_ids && content.genre_ids.includes(genres.id)) {
@@ -71,6 +72,28 @@ export default {
             } else {
                 this.itemsPerScreen = 6
             }
+        },
+        addToMyList(itemId, type) {
+            const token = localStorage.getItem("authToken")
+            axios
+                .post(
+                    "http://127.0.0.1:8000/api/favorites",
+                    {
+                        item_id: String(itemId),
+                        type: type,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    console.log("Aggiunto ai preferiti:", response.data)
+                })
+                .catch((error) => {
+                    console.error("Errore nell'aggiunta ai preferiti:", error.response.data)
+                })
         },
     },
     mounted() {
@@ -129,6 +152,11 @@ export default {
                             <div v-show="content.title" class="title-content">
                                 {{ content.title }}
                             </div>
+                            <button
+                                class="add-to-my-list"
+                                @click="addToMyList(content.id, content.type)">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -185,6 +213,24 @@ export default {
     right: 0;
     top: 0;
     border-radius: 4px;
+}
+
+.add-to-my-list {
+    background-color: rgba(42, 42, 42, 0.6);
+    border: 2px solid hsla(0, 0%, 100%, 0.5);
+    border-radius: 100%;
+    color: white;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    font-weight: 200;
+    position: relative;
+    cursor: pointer;
+}
+
+.add-to-my-list:hover {
+    border: 2px solid white;
+    background-color: rgba(79, 79, 79, 0.6);
 }
 
 .title-content {

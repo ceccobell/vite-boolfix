@@ -38,6 +38,7 @@ export default {
                     this.genres = result.data.genres
                 })
         },
+        addToMyList() {},
     },
 }
 </script>
@@ -56,7 +57,7 @@ export default {
                         <i class="fa-solid fa-play"></i>
                         <span>Riproduci</span>
                     </button>
-                    <button class="add-to-my-list">
+                    <button class="add-to-my-list" @click="addToMyList">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                     <button class="like">
