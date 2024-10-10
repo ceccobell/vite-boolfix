@@ -3,6 +3,7 @@
     <div v-else>
         <Billboard />
         <main>
+            <MyList />
             <Top10SerieTV />
             <ContentSection />
             <Top10Movies />
@@ -16,6 +17,7 @@ import SearchResults from "../SearchResults.vue"
 import Top10Movies from "../Top10Movies.vue"
 import Top10SerieTV from "../Top10SerieTV.vue"
 import ContentSection from "../ContentSections.vue"
+import MyList from "../MyList.vue"
 import { store } from "../../store"
 
 export default {
@@ -25,6 +27,7 @@ export default {
         ContentSection,
         Billboard,
         SearchResults,
+        MyList,
     },
     data() {
         return {

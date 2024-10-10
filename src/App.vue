@@ -40,16 +40,19 @@ export default {
                 })
                 .then((response) => {
                     this.favorites = response.data
+                    console.log(this.favorites)
                     this.favorites.forEach((favorite) => {
+                        store.myListID.push(favorite.item_id)
                         axios
                             .get(
                                 `https://api.themoviedb.org/3/${favorite.type}/${favorite.item_id}?api_key=23534135ecaf0f022b163c9be897d83b`
                             )
                             .then((result) => {
-                                store.myList.push(result.data)
+                                let info = result.data
+                                info["favorite_id"] = favorite.id
+                                store.myList.push(info)
                             })
                     })
-                    console.log("Preferiti recuperati:", this.favorites)
                 })
                 .catch((error) => {
                     console.error("Errore nel recupero dei preferiti:", error.response.data)

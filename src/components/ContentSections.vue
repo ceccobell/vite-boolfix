@@ -95,6 +95,28 @@ export default {
                     console.error("Errore nell'aggiunta ai preferiti:", error.response.data)
                 })
         },
+        removeToMyList(itemId) {
+            store.myList.forEach((favorite) => {
+                if (itemId === favorite.id) {
+                    const token = localStorage.getItem("authToken")
+                    axios
+                        .delete(`http://127.0.0.1:8000/api/favorites/${favorite.favorite_id}`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                        .then((response) => {
+                            console.log("Rimosso dai preferiti:", response.data)
+                        })
+                        .catch((error) => {
+                            console.error(
+                                "Errore nella rimozione dai preferiti:",
+                                error.response.data
+                            )
+                        })
+                }
+            })
+        },
     },
     mounted() {
         window.addEventListener("resize", this.updateItemsPerScreen)
@@ -152,6 +174,9 @@ export default {
                             <div v-show="content.title" class="title-content">
                                 {{ content.title }}
                             </div>
+                            <button class="remove-to-my-list" @click="removeToMyList(content.id)">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
                             <button
                                 class="add-to-my-list"
                                 @click="addToMyList(content.id, content.type)">
@@ -215,7 +240,8 @@ export default {
     border-radius: 4px;
 }
 
-.add-to-my-list {
+.add-to-my-list,
+.remove-to-my-list {
     background-color: rgba(42, 42, 42, 0.6);
     border: 2px solid hsla(0, 0%, 100%, 0.5);
     border-radius: 100%;
@@ -228,7 +254,8 @@ export default {
     cursor: pointer;
 }
 
-.add-to-my-list:hover {
+.add-to-my-list:hover,
+.remove-to-my-list:hover {
     border: 2px solid white;
     background-color: rgba(79, 79, 79, 0.6);
 }
