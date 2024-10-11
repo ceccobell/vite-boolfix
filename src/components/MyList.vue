@@ -47,6 +47,29 @@ export default {
                 this.sliderIndex = 0
             }
         },
+        removeToMyList(itemId) {
+            store.myList.forEach((favorite, index) => {
+                if (itemId === favorite.id) {
+                    const token = localStorage.getItem("authToken")
+                    axios
+                        .delete(`http://127.0.0.1:8000/api/favorites/${favorite.favorite_id}`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                        .then((response) => {
+                            console.log("Rimosso dai preferiti:", response.data)
+                            store.myList.splice(index, 1)
+                        })
+                        .catch((error) => {
+                            console.error(
+                                "Errore nella rimozione dai preferiti:",
+                                error.response.data
+                            )
+                        })
+                }
+            })
+        },
     },
     mounted() {
         window.addEventListener("resize", this.updateItemsPerScreen)
@@ -59,7 +82,7 @@ export default {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container" v-if="store.myList.length > 0">
         <div class="row-slider">
             <div class="header">
                 <h3 class="title text-white">La mia lista</h3>
@@ -83,10 +106,28 @@ export default {
                         '--items-per-screen': itemsPerScreen,
                         '--slider-index': sliderIndex,
                     }">
-                    <div v-for="(item, index) in store.myList" :key="index" class="slider-card">
+                    <div v-for="(content, index) in store.myList" :key="index" class="slider-card">
                         <img
-                            :src="`http://image.tmdb.org/t/p/w342/${item.backdrop_path}`"
-                            :alt="item.name" />
+                            :src="`http://image.tmdb.org/t/p/w342/${content.backdrop_path}`"
+                            :alt="content.name" />
+                        <div v-show="content.name" class="title-content">
+                            {{ content.name }}
+                        </div>
+                        <div v-show="content.title" class="title-content">
+                            {{ content.title }}
+                        </div>
+                        <button
+                            v-show="store.myList.some((item) => item.id === content.id)"
+                            class="remove-to-my-list"
+                            @click="removeToMyList(content.id)">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                        <button
+                            v-show="!store.myList.some((item) => item.id === content.id)"
+                            class="add-to-my-list"
+                            @click="addToMyList(content.id, content.type)">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
                     </div>
                 </div>
                 <button
@@ -222,5 +263,33 @@ export default {
 
 .progress-item.active {
     background-color: rgba(255, 255, 255, 0.9);
+}
+
+.add-to-my-list,
+.remove-to-my-list {
+    background-color: rgba(42, 42, 42, 0.6);
+    border: 2px solid hsla(0, 0%, 100%, 0.5);
+    border-radius: 100%;
+    color: white;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    font-weight: 200;
+    position: relative;
+    cursor: pointer;
+}
+
+.add-to-my-list:hover,
+.remove-to-my-list:hover {
+    border: 2px solid white;
+    background-color: rgba(79, 79, 79, 0.6);
+}
+
+.title-content {
+    color: white;
+    font-size: 10px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 </style>
