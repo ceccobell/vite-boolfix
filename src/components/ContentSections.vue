@@ -174,10 +174,14 @@ export default {
                             <div v-show="content.title" class="title-content">
                                 {{ content.title }}
                             </div>
-                            <button class="remove-to-my-list" @click="removeToMyList(content.id)">
+                            <button
+                                v-show="store.myList.some((item) => item.id === content.id)"
+                                class="remove-to-my-list"
+                                @click="removeToMyList(content.id)">
                                 <i class="fa-solid fa-check"></i>
                             </button>
                             <button
+                                v-show="!store.myList.some((item) => item.id === content.id)"
                                 class="add-to-my-list"
                                 @click="addToMyList(content.id, content.type)">
                                 <i class="fa-solid fa-plus"></i>

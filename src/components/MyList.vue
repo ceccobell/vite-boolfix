@@ -83,7 +83,7 @@ export default {
                         '--items-per-screen': itemsPerScreen,
                         '--slider-index': sliderIndex,
                     }">
-                    <div v-for="(item, index) in store.myList" :key="index" class="slider-item">
+                    <div v-for="(item, index) in store.myList" :key="index" class="slider-card">
                         <img
                             :src="`http://image.tmdb.org/t/p/w342/${item.backdrop_path}`"
                             :alt="item.name" />
@@ -120,18 +120,32 @@ export default {
     transform: translateX(calc(var(--slider-index) * -100%));
 }
 
-.slider-item {
+.slider-card {
     flex: 1 0 calc(100% / var(--items-per-screen));
     padding: 2px;
+    cursor: pointer;
+    position: relative;
 }
 
-.slider-item img {
+.slider-card img {
     width: 100%;
     border-radius: 5px;
 }
 
-.slider-item img:last-child {
-    margin-left: -10px;
+.slider-card::before {
+    background: linear-gradient(
+        198deg,
+        rgba(0, 0, 0, 0.9),
+        hsla(0, 0%, 9%, 0.5) 20%,
+        transparent 28%
+    );
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    border-radius: 4px;
 }
 
 .handle {
@@ -185,7 +199,8 @@ export default {
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 0% 4%;
+    padding: 0% calc(4% + 4px);
+    padding-top: 4vw;
     line-height: 1.3;
 }
 
@@ -193,6 +208,7 @@ export default {
     font-size: 1.4vw;
     line-height: 1.25vw;
     vertical-align: middle;
+    padding-bottom: 3px;
 }
 
 .progress-item {
