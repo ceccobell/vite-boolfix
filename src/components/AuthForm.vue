@@ -14,6 +14,7 @@ export default {
                 password: "",
                 password_confirmation: "",
             },
+            errors: {},
         }
     },
     methods: {
@@ -39,6 +40,9 @@ export default {
                     axios.defaults.withCredentials = false
                 })
                 .catch((error) => {
+                    if (error.response && error.response.data.errors) {
+                        this.errors = error.response.data.errors
+                    }
                     console.error("Login error:", error.response.data)
                 })
         },
@@ -61,6 +65,9 @@ export default {
                     this.form.password_confirmation = ""
                 })
                 .catch((error) => {
+                    if (error.response && error.response.data.errors) {
+                        this.errors = error.response.data.errors
+                    }
                     console.error("Registration error:", error.response.data)
                 })
         },
@@ -89,6 +96,9 @@ export default {
             <!-- Form di Login -->
             <form @submit.prevent="submitLogin" v-if="loginActive">
                 <div class="tab-content" id="login">
+                    <span v-if="this.errors.email" class="error-message">
+                        {{ this.errors.email[0] }}
+                    </span>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input
@@ -100,6 +110,9 @@ export default {
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input id="password" type="password" v-model="form.password" />
+                        <span v-if="this.errors.password" class="error-message">
+                            {{ this.errors.password[0] }}
+                        </span>
                     </div>
                     <button class="submit-button" type="submit">Accedi</button>
                 </div>
@@ -111,6 +124,10 @@ export default {
                     <div class="form-group">
                         <label for="name">Nome</label>
                         <input type="text" id="name" v-model="form.name" placeholder="Giuseppe" />
+                        <span v-if="this.errors.name" class="error-message">
+                            {{ this.errors.name[0] }}
+                        </span>
+                        <!-- Mostra errore -->
                     </div>
                     <div class="form-group">
                         <label for="new-email">Email</label>
@@ -119,10 +136,18 @@ export default {
                             type="email"
                             v-model="form.email"
                             placeholder="m@example.com" />
+                        <span v-if="this.errors.email" class="error-message">
+                            {{ this.errors.email[0] }}
+                        </span>
+                        <!-- Mostra errore -->
                     </div>
                     <div class="form-group">
                         <label for="new-password">Password</label>
                         <input id="new-password" type="password" v-model="form.password" />
+                        <span v-if="this.errors.password" class="error-message">
+                            {{ this.errors.password[0] }}
+                        </span>
+                        <!-- Mostra errore -->
                     </div>
                     <div class="form-group">
                         <label for="confirm-password">Conferma Password</label>
@@ -130,6 +155,10 @@ export default {
                             id="confirm-password"
                             type="password"
                             v-model="form.password_confirmation" />
+                        <span v-if="this.errors.password_confirmation" class="error-message">
+                            {{ this.errors.password_confirmation[0] }}
+                        </span>
+                        <!-- Mostra errore -->
                     </div>
                     <button class="submit-button" type="submit">Registrati</button>
                 </div>
@@ -244,5 +273,14 @@ input {
 
 .submit-button:hover {
     background-color: #e63b44;
+}
+
+.error-message {
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+    background-color: #e63b44;
+    padding: 10px;
+    border-radius: 5px;
 }
 </style>
