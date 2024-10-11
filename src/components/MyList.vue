@@ -157,12 +157,15 @@ export default {
 
 .slider {
     display: flex;
+    justify-content: flex-start;
     transition: transform 500ms ease-in-out;
     transform: translateX(calc(var(--slider-index) * -100%));
+    width: 100%;
 }
 
 .slider-card {
     flex: 1 0 calc(100% / var(--items-per-screen));
+    max-width: calc(100% / var(--items-per-screen));
     padding: 2px;
     cursor: pointer;
     position: relative;
