@@ -31,32 +31,34 @@ export default {
             })
         },
         fetchMyList() {
-            const token = localStorage.getItem("authToken")
-            axios
-                .get("http://127.0.0.1:8000/api/favorites", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                .then((response) => {
-                    this.favorites = response.data
-                    console.log(this.favorites)
-                    this.favorites.forEach((favorite) => {
-                        store.myListID.push(favorite.item_id)
-                        axios
-                            .get(
-                                `https://api.themoviedb.org/3/${favorite.type}/${favorite.item_id}?api_key=23534135ecaf0f022b163c9be897d83b`
-                            )
-                            .then((result) => {
-                                let info = result.data
-                                info["favorite_id"] = favorite.id
-                                store.myList.push(info)
-                            })
+            if (store.isAuthenticated) {
+                const token = localStorage.getItem("authToken")
+                axios
+                    .get("http://127.0.0.1:8000/api/favorites", {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
                     })
-                })
-                .catch((error) => {
-                    console.error("Errore nel recupero dei preferiti:", error.response.data)
-                })
+                    .then((response) => {
+                        this.favorites = response.data
+                        console.log(this.favorites)
+                        this.favorites.forEach((favorite) => {
+                            store.myListID.push(favorite.item_id)
+                            axios
+                                .get(
+                                    `https://api.themoviedb.org/3/${favorite.type}/${favorite.item_id}?api_key=23534135ecaf0f022b163c9be897d83b`
+                                )
+                                .then((result) => {
+                                    let info = result.data
+                                    info["favorite_id"] = favorite.id
+                                    store.myList.push(info)
+                                })
+                        })
+                    })
+                    .catch((error) => {
+                        console.error("Errore nel recupero dei preferiti:", error.response.data)
+                    })
+            }
         },
     },
     mounted() {

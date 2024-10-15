@@ -3,8 +3,8 @@
     <div v-else>
         <main>
             <Top10SerieTV />
-            <ContentSection />
             <Top10Movies />
+            <ContentSection :sections="sectionsNuoviPopolari" />
         </main>
     </div>
 </template>
@@ -15,6 +15,7 @@ import Top10Movies from "../Top10Movies.vue"
 import Top10SerieTV from "../Top10SerieTV.vue"
 import ContentSection from "../ContentSections.vue"
 import { store } from "../../store"
+import sectionsData from "../../assets/sections.json"
 
 export default {
     components: {
@@ -26,6 +27,7 @@ export default {
     data() {
         return {
             store,
+            sectionsNuoviPopolari: sectionsData.nuoviPopolari,
         }
     },
 }
@@ -34,6 +36,7 @@ export default {
 <style scoped>
 main {
     background-color: #141414;
+    height: 100vh;
     padding-top: 100px;
 }
 </style>

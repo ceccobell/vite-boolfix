@@ -5,7 +5,7 @@
         <main>
             <MyList />
             <Top10SerieTV />
-            <ContentSection />
+            <ContentSection :sections="sectionsHome" />
             <Top10Movies />
         </main>
     </div>
@@ -19,6 +19,7 @@ import Top10SerieTV from "../Top10SerieTV.vue"
 import ContentSection from "../ContentSections.vue"
 import MyList from "../MyList.vue"
 import { store } from "../../store"
+import sectionsData from "../../assets/sections.json"
 
 export default {
     components: {
@@ -32,6 +33,7 @@ export default {
     data() {
         return {
             store,
+            sectionsHome: sectionsData.home,
         }
     },
 }

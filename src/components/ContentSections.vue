@@ -3,6 +3,12 @@ import { store } from "../store"
 import axios from "axios"
 
 export default {
+    props: {
+        sections: {
+            type: Array,
+            required: true,
+        },
+    },
     data() {
         return {
             store,
@@ -19,7 +25,7 @@ export default {
     },
     methods: {
         getContents() {
-            this.store.sections.forEach((section, index) => {
+            this.sections.forEach((section, index) => {
                 axios.get(section.apiUrl).then((result) => {
                     this.contents[index] = result.data.results
                     this.sliderIndex[index] = 0
@@ -112,7 +118,6 @@ export default {
                 })
                 .then((response) => {
                     this.favorites = response.data
-                    console.log(this.favorites)
                     store.myList = []
                     this.favorites.forEach((favorite) => {
                         store.myListID.push(favorite.item_id)
@@ -168,10 +173,7 @@ export default {
 
 <template>
     <div class="container">
-        <div
-            v-for="(section, sectionIndex) in store.sections"
-            :key="sectionIndex"
-            class="row-slider">
+        <div v-for="(section, sectionIndex) in sections" :key="sectionIndex" class="row-slider">
             <div class="header">
                 <h3 class="title text-white">{{ section.title }}</h3>
                 <div class="progress-bar">

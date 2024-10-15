@@ -43,10 +43,14 @@ export default {
     methods: {
         selectItem(selectedItem) {
             this.navbarItems.forEach((item) => {
-                item.selected = false
+                item.selected = item === selectedItem
             })
-
-            selectedItem.selected = true
+        },
+        setSelectedNavbarItem() {
+            const currentPath = this.$route.path
+            this.navbarItems.forEach((item) => {
+                item.selected = item.url === currentPath
+            })
         },
         toggleSearch() {
             this.searchActive = !this.searchActive
@@ -92,9 +96,15 @@ export default {
                 })
         },
     },
+    watch: {
+        $route() {
+            this.setSelectedNavbarItem()
+        },
+    },
     mounted() {
         window.addEventListener("scroll", this.handleScroll)
         store.isAuthenticated = !!localStorage.getItem("authToken")
+        this.setSelectedNavbarItem()
     },
     beforeUnmount() {
         window.removeEventListener("scroll", this.handleScroll)
@@ -120,7 +130,11 @@ export default {
                                     @click="selectItem(item)">
                                     <router-link
                                         :to="item.url"
-                                        :class="item.selected ? 'text-active' : 'text-disabled'"
+                                        :class="
+                                            item.url === this.$route.path
+                                                ? 'text-active'
+                                                : 'text-disabled'
+                                        "
                                         class="navigation-tab text-center">
                                         {{ item.name }}
                                     </router-link>

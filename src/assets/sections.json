@@ -1,0 +1,130 @@
+{
+    "home": [
+        {
+            "title": "SERIE TV acclamate dalla critica",
+            "apiUrl": "https://api.themoviedb.org/3/tv/top_rated?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "tv",
+            "displayCount": 40
+        },
+        {
+            "title": "Film acclamati dalla critica",
+            "apiUrl": "https://api.themoviedb.org/3/movie/top_rated?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "movie",
+            "displayCount": 40
+        },
+        {
+            "title": "Film commedia",
+            "apiUrl": "https://api.themoviedb.org/3/discover/movie?api_key=23534135ecaf0f022b163c9be897d83b&with_genres=35",
+            "type": "movie",
+            "displayCount": 40
+        },
+        {
+            "title": "Film Horror",
+            "apiUrl": "https://api.themoviedb.org/3/discover/movie?api_key=23534135ecaf0f022b163c9be897d83b&with_genres=27",
+            "type": "movie",
+            "displayCount": 40
+        },
+        {
+            "title": "Film attualmente disponibili",
+            "apiUrl": "https://api.themoviedb.org/3/movie/now_playing?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "movie",
+            "displayCount": 40
+        },
+        {
+            "title": "Serie TV in onda oggi",
+            "apiUrl": "https://api.themoviedb.org/3/tv/airing_today?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "tv",
+            "displayCount": 40
+        },
+        {
+            "title": "Serie TV in onda durante la prossima settimana",
+            "apiUrl": "https://api.themoviedb.org/3/tv/on_the_air?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "tv",
+            "displayCount": 40
+        },
+        {
+            "title": "Serie TV per bambini",
+            "apiUrl": "https://api.themoviedb.org/3/discover/tv?api_key=23534135ecaf0f022b163c9be897d83b&with_genres=10762",
+            "type": "tv",
+            "displayCount": 40
+        }
+    ],
+    "tv": [
+        {
+            "title": "SERIE TV acclamate dalla critica",
+            "apiUrl": "https://api.themoviedb.org/3/tv/top_rated?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "tv",
+            "displayCount": 40
+        },
+        {
+            "title": "SERIE TV popolari",
+            "apiUrl": "https://api.themoviedb.org/3/tv/popular?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "tv",
+            "displayCount": 40
+        },
+        {
+            "title": "SERIE TV in onda durante la settimana",
+            "apiUrl": "https://api.themoviedb.org/3/tv/on_the_air?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "tv",
+            "displayCount": 40
+        },
+        {
+            "title": "SERIE TV in onda oggi",
+            "apiUrl": "https://api.themoviedb.org/3/tv/airing_today?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "tv",
+            "displayCount": 40
+        },
+        {
+            "title": "Serie TV per bambini",
+            "apiUrl": "https://api.themoviedb.org/3/discover/tv?api_key=23534135ecaf0f022b163c9be897d83b&with_genres=10762",
+            "type": "tv",
+            "displayCount": 40
+        }
+    ],
+    "movie": [
+        {
+            "title": "Film acclamati dalla critica",
+            "apiUrl": "https://api.themoviedb.org/3/movie/top_rated?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "movie",
+            "displayCount": 40
+        },
+        {
+            "title": "Film popolari",
+            "apiUrl": "https://api.themoviedb.org/3/movie/popular?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "movie",
+            "displayCount": 40
+        },
+        {
+            "title": "Film in onda oggi",
+            "apiUrl": "https://api.themoviedb.org/3/movie/now_playing?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "movie",
+            "displayCount": 40
+        },
+        {
+            "title": "Film commedia",
+            "apiUrl": "https://api.themoviedb.org/3/discover/movie?api_key=23534135ecaf0f022b163c9be897d83b&with_genres=35",
+            "type": "movie",
+            "displayCount": 40
+        },
+        {
+            "title": "Film per famiglie",
+            "apiUrl": "https://api.themoviedb.org/3/discover/movie?api_key=23534135ecaf0f022b163c9be897d83b&with_genres=10751",
+            "type": "movie",
+            "displayCount": 40
+        },
+        {
+            "title": "Film disponibili prossimamente",
+            "apiUrl": "https://api.themoviedb.org/3/movie/upcoming?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "movie",
+            "displayCount": 40
+        }
+    ],
+    "nuoviPopolari": [
+        {
+            "title": "Film disponibili prossimamente",
+            "apiUrl": "https://api.themoviedb.org/3/movie/upcoming?api_key=23534135ecaf0f022b163c9be897d83b",
+            "type": "movie",
+            "displayCount": 40
+        }
+    ]
+}

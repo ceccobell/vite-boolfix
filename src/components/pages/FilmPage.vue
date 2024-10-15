@@ -4,7 +4,7 @@
         <Billboard />
         <main>
             <Top10Movies />
-            <ContentSection />
+            <ContentSection :sections="sectionsMovie" />
         </main>
     </div>
 </template>
@@ -16,6 +16,7 @@ import Top10Movies from "../Top10Movies.vue"
 import Top10SerieTV from "../Top10SerieTV.vue"
 import ContentSection from "../ContentSections.vue"
 import { store } from "../../store"
+import sectionsData from "../../assets/sections.json"
 
 export default {
     components: {
@@ -28,6 +29,7 @@ export default {
     data() {
         return {
             store,
+            sectionsMovie: sectionsData.movie,
         }
     },
 }
