@@ -16,7 +16,7 @@ export default {
 
             axios
                 .post(
-                    "http://127.0.0.1:8000/api/logout",
+                    "https://git.heroku.com/boolflix-backend.git/api/logout",
                     {},
                     {
                         headers: {
@@ -25,7 +25,6 @@ export default {
                     }
                 )
                 .then(() => {
-                    console.log("Logout successful")
                     localStorage.removeItem("authToken")
                     store.isAuthenticated = false
                     axios.defaults.withCredentials = false

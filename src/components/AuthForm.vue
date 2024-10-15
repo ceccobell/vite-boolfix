@@ -28,12 +28,11 @@ export default {
         submitLogin() {
             axios.defaults.withCredentials = true
             axios
-                .post("http://127.0.0.1:8000/api/login", {
+                .post("https://git.heroku.com/boolflix-backend.git/api/login", {
                     email: this.form.email,
                     password: this.form.password,
                 })
                 .then((response) => {
-                    console.log("Login successful:", response.data)
                     localStorage.setItem("authToken", response.data.access_token)
                     store.isAuthenticated = true
                     this.closeCanvas()
@@ -49,7 +48,7 @@ export default {
         submitRegistration() {
             axios.defaults.withCredentials = true
             axios
-                .post("http://127.0.0.1:8000/api/register", {
+                .post("https://git.heroku.com/boolflix-backend.git/api/register", {
                     name: this.form.name,
                     email: this.form.email,
                     password: this.form.password,

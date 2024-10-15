@@ -34,7 +34,7 @@ export default {
             if (store.isAuthenticated) {
                 const token = localStorage.getItem("authToken")
                 axios
-                    .get("http://127.0.0.1:8000/api/favorites", {
+                    .get("https://git.heroku.com/boolflix-backend.git/api/favorites", {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
