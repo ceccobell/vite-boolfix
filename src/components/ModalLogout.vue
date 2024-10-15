@@ -16,7 +16,7 @@ export default {
 
             axios
                 .post(
-                    "https://git.heroku.com/boolflix-backend.git/api/logout",
+                    "https://gentle-plateau-85604-b4dd7448ed6b.herokuapp.com/api/logout",
                     {},
                     {
                         headers: {

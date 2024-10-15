@@ -28,7 +28,7 @@ export default {
         submitLogin() {
             axios.defaults.withCredentials = true
             axios
-                .post("https://git.heroku.com/boolflix-backend.git/api/login", {
+                .post("https://gentle-plateau-85604-b4dd7448ed6b.herokuapp.com/api/login", {
                     email: this.form.email,
                     password: this.form.password,
                 })
@@ -48,7 +48,7 @@ export default {
         submitRegistration() {
             axios.defaults.withCredentials = true
             axios
-                .post("https://git.heroku.com/boolflix-backend.git/api/register", {
+                .post("https://gentle-plateau-85604-b4dd7448ed6b.herokuapp.com/api/register", {
                     name: this.form.name,
                     email: this.form.email,
                     password: this.form.password,
