@@ -2,10 +2,12 @@
 import { store } from "../store"
 import axios from "axios"
 import AuthForm from "./AuthForm.vue"
+import ModalLogout from "./ModalLogout.vue"
 
 export default {
     components: {
         AuthForm,
+        ModalLogout,
     },
     data() {
         return {
@@ -22,6 +24,7 @@ export default {
             isScrolled: false,
             isDropdownVisible: false,
             isAuthFormVisible: false,
+            isModalVisible: false,
         }
     },
 
@@ -70,30 +73,8 @@ export default {
         closeCanvas(value) {
             this.isAuthFormVisible = value
         },
-        logout() {
-            axios.defaults.withCredentials = true
-
-            const token = localStorage.getItem("authToken")
-
-            axios
-                .post(
-                    "http://127.0.0.1:8000/api/logout",
-                    {},
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                )
-                .then(() => {
-                    console.log("Logout successful")
-                    localStorage.removeItem("authToken")
-                    store.isAuthenticated = false
-                    axios.defaults.withCredentials = false
-                })
-                .catch((error) => {
-                    console.error("Logout error:", error.response.data)
-                })
+        closeModal(value) {
+            this.isModalVisible = value
         },
     },
     watch: {
@@ -173,7 +154,10 @@ export default {
                             @click="showAuthForm">
                             SIGN IN
                         </button>
-                        <button v-if="store.isAuthenticated" class="user-btn" @click="logout">
+                        <button
+                            v-if="store.isAuthenticated"
+                            class="user-btn"
+                            @click="isModalVisible = true">
                             SIGN OUT
                         </button>
                     </div>
@@ -181,10 +165,13 @@ export default {
             </div>
         </div>
         <transition>
-            <div class="overlay" v-if="isAuthFormVisible"></div>
+            <div class="overlay" v-if="isAuthFormVisible || isModalVisible"></div>
         </transition>
         <transition>
             <AuthForm v-if="isAuthFormVisible" @close-canva="closeCanvas" />
+        </transition>
+        <transition>
+            <ModalLogout v-if="isModalVisible" @close-modal="closeModal" />
         </transition>
     </header>
 </template>
