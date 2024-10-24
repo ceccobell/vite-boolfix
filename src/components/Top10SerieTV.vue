@@ -1,5 +1,6 @@
 <script>
 import axios from "axios"
+import { store } from "../store"
 
 export default {
     data() {
@@ -9,6 +10,7 @@ export default {
             top10serieTV_list: [],
             itemsPerScreen: 4,
             sliderIndex: 0,
+            store,
         }
     },
     computed: {
@@ -58,6 +60,86 @@ export default {
                 this.sliderIndex = 0
             }
         },
+        removeToMyList(itemId) {
+            store.myList.forEach((favorite, index) => {
+                if (itemId === favorite.id) {
+                    const token = localStorage.getItem("authToken")
+                    axios
+                        .delete(`http://127.0.0.1:8000/api/favorites/${favorite.favorite_id}`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                        .then((response) => {
+                            console.log("Rimosso dai preferiti:", response.data)
+                            store.myList.splice(index, 1)
+                        })
+                        .catch((error) => {
+                            console.error(
+                                "Errore nella rimozione dai preferiti:",
+                                error.response.data
+                            )
+                        })
+                }
+            })
+        },
+        addToMyList(itemId, type) {
+            const token = localStorage.getItem("authToken")
+            axios
+                .post(
+                    "http://127.0.0.1:8000/api/favorites",
+                    {
+                        item_id: String(itemId),
+                        type: type,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    console.log("Aggiunto ai preferiti:", response.data)
+                    axios
+                        .get(
+                            `https://api.themoviedb.org/3/${type}/${itemId}?api_key=23534135ecaf0f022b163c9be897d83b`
+                        )
+                        .then((result) => {
+                            this.fetchMyList()
+                        })
+                })
+                .catch((error) => {
+                    console.error("Errore nell'aggiunta ai preferiti:", error.response.data)
+                })
+        },
+        fetchMyList() {
+            const token = localStorage.getItem("authToken")
+            axios
+                .get("http://127.0.0.1:8000/api/favorites", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                .then((response) => {
+                    this.favorites = response.data
+                    store.myList = []
+                    this.favorites.forEach((favorite) => {
+                        store.myListID.push(favorite.item_id)
+                        axios
+                            .get(
+                                `https://api.themoviedb.org/3/${favorite.type}/${favorite.item_id}?api_key=23534135ecaf0f022b163c9be897d83b`
+                            )
+                            .then((result) => {
+                                let info = result.data
+                                info["favorite_id"] = favorite.id
+                                store.myList.push(info)
+                            })
+                    })
+                })
+                .catch((error) => {
+                    console.error("Errore nel recupero dei preferiti:", error.response.data)
+                })
+        },
     },
     mounted() {
         window.addEventListener("resize", this.updateItemsPerScreen)
@@ -103,6 +185,18 @@ export default {
                         <img
                             :src="`http://image.tmdb.org/t/p/w342/${serie.poster_path}`"
                             :alt="serie.name" />
+                        <button
+                            v-show="store.myList.some((item) => item.id === serie.id)"
+                            class="remove-to-my-list"
+                            @click="removeToMyList(serie.id)">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                        <button
+                            v-show="!store.myList.some((item) => item.id === serie.id)"
+                            class="add-to-my-list"
+                            @click="addToMyList(serie.id, serie.media_type)">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
                     </div>
                 </div>
                 <button
@@ -139,6 +233,7 @@ export default {
 .slider-item {
     flex: 1 0 calc(100% / var(--items-per-screen));
     padding: 2px;
+    position: relative;
 }
 
 .slider-item img {
@@ -224,5 +319,41 @@ export default {
 
 .progress-item.active {
     background-color: rgba(255, 255, 255, 0.9);
+}
+
+.add-to-my-list,
+.remove-to-my-list {
+    background-color: rgba(42, 42, 42, 0.6);
+    border: 2px solid hsla(0, 0%, 100%, 0.5);
+    border-radius: 100%;
+    color: white;
+    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    font-weight: 200;
+    position: relative;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.add-to-my-list:hover,
+.remove-to-my-list:hover {
+    border: 2px solid white;
+    background-color: rgba(79, 79, 79, 0.6);
+}
+
+.slider-item:hover .add-to-my-list,
+.remove-to-my-list {
+    opacity: 1;
+}
+
+.slider-item:hover::before {
+    background-color: rgba(0, 0, 0, 0.6);
 }
 </style>
