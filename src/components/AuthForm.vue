@@ -28,7 +28,7 @@ export default {
         submitLogin() {
             axios.defaults.withCredentials = true
             axios
-                .post("http://127.0.0.1:8000/api/login", {
+                .post(`${store.apiUrl}/api/login`, {
                     email: this.form.email,
                     password: this.form.password,
                 })
@@ -48,7 +48,7 @@ export default {
         submitRegistration() {
             axios.defaults.withCredentials = true
             axios
-                .post("http://127.0.0.1:8000/api/register", {
+                .post(`${store.apiUrl}/api/register`, {
                     name: this.form.name,
                     email: this.form.email,
                     password: this.form.password,

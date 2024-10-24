@@ -87,7 +87,7 @@ export default {
             const token = localStorage.getItem("authToken")
             axios
                 .post(
-                    "http://127.0.0.1:8000/api/favorites",
+                    `${store.apiUrl}/api/favorites`,
                     {
                         item_id: String(itemId),
                         type: type,
@@ -115,7 +115,7 @@ export default {
         fetchMyList() {
             const token = localStorage.getItem("authToken")
             axios
-                .get("http://127.0.0.1:8000/api/favorites", {
+                .get(`${store.apiUrl}/api/favorites`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

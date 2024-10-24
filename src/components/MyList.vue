@@ -52,7 +52,7 @@ export default {
                 if (itemId === favorite.id) {
                     const token = localStorage.getItem("authToken")
                     axios
-                        .delete(`http://127.0.0.1:8000/api/favorites/${favorite.favorite_id}`, {
+                        .delete(`${store.apiUrl}/api/favorites/${favorite.favorite_id}`, {
                             headers: {
                                 Authorization: `Bearer ${token}`,
                             },

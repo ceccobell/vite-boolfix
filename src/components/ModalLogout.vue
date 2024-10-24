@@ -16,7 +16,7 @@ export default {
 
             axios
                 .post(
-                    "http://127.0.0.1:8000/api/logout",
+                    `${store.apiUrl}/api/logout`,
                     {},
                     {
                         headers: {
