@@ -17,5 +17,4 @@ export const store = reactive({
     serieTVgenresApi:
         "https://api.themoviedb.org/3/genre/tv/list?api_key=23534135ecaf0f022b163c9be897d83b",
     serieTVgenresList: [],
-    apiUrl: process.env.VUE_APP_API_URL,
 })

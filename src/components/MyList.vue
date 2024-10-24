@@ -52,11 +52,14 @@ export default {
                 if (itemId === favorite.id) {
                     const token = localStorage.getItem("authToken")
                     axios
-                        .delete(`${store.apiUrl}/api/favorites/${favorite.favorite_id}`, {
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                            },
-                        })
+                        .delete(
+                            `https://boolflix-1c2e0e6c24b8.herokuapp.com/api/favorites/${favorite.favorite_id}`,
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                },
+                            }
+                        )
                         .then((response) => {
                             console.log("Rimosso dai preferiti:", response.data)
                             store.myList.splice(index, 1)

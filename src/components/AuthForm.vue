@@ -28,7 +28,7 @@ export default {
         submitLogin() {
             axios.defaults.withCredentials = true
             axios
-                .post(`${store.apiUrl}/api/login`, {
+                .post(`https://boolflix-1c2e0e6c24b8.herokuapp.com/api/login`, {
                     email: this.form.email,
                     password: this.form.password,
                 })
@@ -48,7 +48,7 @@ export default {
         submitRegistration() {
             axios.defaults.withCredentials = true
             axios
-                .post(`${store.apiUrl}/api/register`, {
+                .post(`https://boolflix-1c2e0e6c24b8.herokuapp.com/api/register`, {
                     name: this.form.name,
                     email: this.form.email,
                     password: this.form.password,

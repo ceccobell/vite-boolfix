@@ -16,7 +16,7 @@ export default {
 
             axios
                 .post(
-                    `${store.apiUrl}/api/logout`,
+                    `https://boolflix-1c2e0e6c24b8.herokuapp.com/api/logout`,
                     {},
                     {
                         headers: {
