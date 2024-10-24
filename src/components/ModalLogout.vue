@@ -28,6 +28,7 @@ export default {
                     localStorage.removeItem("authToken")
                     store.isAuthenticated = false
                     axios.defaults.withCredentials = false
+                    store.myList = []
                     this.$emit("close-modal", false)
                 })
                 .catch((error) => {

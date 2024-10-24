@@ -66,6 +66,13 @@ export default {
         this.getSerieTVgenres()
         this.fetchMyList()
     },
+    watch: {
+        "store.isAuthenticated": function (newValue) {
+            if (newValue) {
+                this.fetchMyList()
+            }
+        },
+    },
 }
 </script>
 
