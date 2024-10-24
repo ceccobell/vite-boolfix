@@ -34,14 +34,14 @@ export default {
             if (store.isAuthenticated) {
                 const token = localStorage.getItem("authToken")
                 axios
-                    .get("https://gentle-plateau-85604-b4dd7448ed6b.herokuapp.com/api/favorites", {
+                    .get("http://127.0.0.1:8000/api/favorites", {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
                     })
                     .then((response) => {
                         this.favorites = response.data
-                        console.log(this.favorites)
+                        console.log("ciao", this.favorites)
                         this.favorites.forEach((favorite) => {
                             store.myListID.push(favorite.item_id)
                             axios

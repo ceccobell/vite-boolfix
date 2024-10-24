@@ -275,17 +275,33 @@ export default {
     border-radius: 100%;
     color: white;
     font-size: 16px;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     font-weight: 200;
     position: relative;
     cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .add-to-my-list:hover,
 .remove-to-my-list:hover {
     border: 2px solid white;
     background-color: rgba(79, 79, 79, 0.6);
+}
+
+.slider-card:hover .add-to-my-list,
+.remove-to-my-list {
+    opacity: 1;
+}
+
+.slider-card:hover::before {
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .title-content {

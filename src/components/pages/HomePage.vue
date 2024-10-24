@@ -3,8 +3,8 @@
     <div v-else>
         <Billboard />
         <main>
-            <MyList />
             <Top10SerieTV />
+            <MyList />
             <ContentSection :sections="sectionsHome" />
             <Top10Movies />
         </main>

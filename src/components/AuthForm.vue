@@ -28,7 +28,7 @@ export default {
         submitLogin() {
             axios.defaults.withCredentials = true
             axios
-                .post("https://gentle-plateau-85604-b4dd7448ed6b.herokuapp.com/api/login", {
+                .post("http://127.0.0.1:8000/api/login", {
                     email: this.form.email,
                     password: this.form.password,
                 })
@@ -48,7 +48,7 @@ export default {
         submitRegistration() {
             axios.defaults.withCredentials = true
             axios
-                .post("https://gentle-plateau-85604-b4dd7448ed6b.herokuapp.com/api/register", {
+                .post("http://127.0.0.1:8000/api/register", {
                     name: this.form.name,
                     email: this.form.email,
                     password: this.form.password,

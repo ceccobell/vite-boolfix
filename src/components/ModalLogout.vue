@@ -16,7 +16,7 @@ export default {
 
             axios
                 .post(
-                    "https://gentle-plateau-85604-b4dd7448ed6b.herokuapp.com/api/logout",
+                    "http://127.0.0.1:8000/api/logout",
                     {},
                     {
                         headers: {
