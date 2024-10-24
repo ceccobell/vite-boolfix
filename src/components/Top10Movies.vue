@@ -346,7 +346,7 @@ export default {
 }
 
 .slider-item:hover .add-to-my-list,
-.remove-to-my-list {
+.slider-item:hover .remove-to-my-list {
     opacity: 1;
 }
 

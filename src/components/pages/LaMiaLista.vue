@@ -25,6 +25,7 @@
 <script>
 import SearchResults from "../SearchResults.vue"
 import { store } from "../../store"
+import MyList from "../MyList.vue"
 
 export default {
     components: {

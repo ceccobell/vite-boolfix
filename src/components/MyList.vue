@@ -296,7 +296,7 @@ export default {
 }
 
 .slider-card:hover .add-to-my-list,
-.remove-to-my-list {
+.slider-card:hover .remove-to-my-list {
     opacity: 1;
 }
 
